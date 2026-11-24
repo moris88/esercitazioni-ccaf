@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+/* Palette presa da Esercitazioni_pratiche.pdf */
+@theme {
+  --color-ink: #2b2522;
+  --color-muted: #7a706a;
+  --color-accent: #b85042;
+  --color-sand: #f3eeea;
+  --color-blush: #f6e3de;
+  --color-line: #e2d9d2;
+  --font-sans: "DejaVu Sans", Verdana, "Segoe UI", sans-serif;
+  --font-serif: "DejaVu Serif", Georgia, serif;
+  --font-mono: "DejaVu Sans Mono", "Cascadia Mono", Consolas, monospace;
+  --animate-enter: enter 0.35s ease-out;
+  --animate-blink: blink 1s steps(2) infinite;
+  --animate-flow: flow 0.7s linear infinite;
+
+  @keyframes enter {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+  }
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
+  @keyframes flow {
+    to {
+      stroke-dashoffset: -16;
+    }
+  }
+}
+
+body {
+  background: white;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+button {
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    /* biome-ignore lint/complexity/noImportantStyles: deve prevalere su ogni animazione */
+    animation: none !important;
+    /* biome-ignore lint/complexity/noImportantStyles: deve prevalere su ogni animazione */
+    transition: none !important;
+  }
+}
