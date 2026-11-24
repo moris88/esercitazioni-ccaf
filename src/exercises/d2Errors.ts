@@ -15,16 +15,19 @@ const diagram: Diagram = {
   ],
 };
 
+/** Nella registrazione lo strumento è stato chiamato tre volte */
+const EMPTY_RESULTS = Array(3).fill('lo strumento ha restituito: is_error=False  {"results": []}').join('\n');
+
 function buildScene(id: string, label: string, steps: Step[]): Scene {
   return {
     id,
     label,
     simulator: 'terminal',
-    source: 'esempio',
-    title: 'kit/claude-p',
+    source: 'reale',
+    title: 'kit/claude-p · modello sonnet',
     diagram,
     steps: [
-      { kind: 'command', text: 'python vuoto_o_errore.py' },
+      { kind: 'command', text: 'CLAUDE_MODEL=sonnet python vuoto_o_errore.py' },
       {
         kind: 'output',
         text: 'Domanda: Qual è la politica di reso per i dispositivi elettronici sopra i 500 euro?',
@@ -54,14 +57,14 @@ export const d2Errors: Exercise = {
     buildScene('vuoto', '1. Vuoto', [
       {
         kind: 'output',
-        text: 'lo strumento ha restituito: is_error=False  {"results": []}',
+        text: EMPTY_RESULTS,
         tone: 'info',
         path: ['claude', 'tool', 'kb'],
-        note: 'La ricerca è riuscita: semplicemente non c’è nessun articolo.',
+        note: 'La ricerca è riuscita, senza risultati. Claude ha riprovato con altre parole: tre chiamate.',
       },
       {
         kind: 'output',
-        text: 'risposta di Claude:\nNella knowledge base non ho trovato una politica di reso specifica per questi prodotti.',
+        text: 'risposta di Claude:\nNon ho trovato nella knowledge base nessuna informazione sulla politica di reso per i dispositivi elettronici sopra i 500 euro. Non voglio darti indicazioni inventate. […]',
         path: ['tool', 'claude', 'answer'],
         note: 'Affermazione corretta: il risultato vuoto è un’informazione.',
       },
@@ -69,14 +72,21 @@ export const d2Errors: Exercise = {
     buildScene('errore', '2. Errore strutturato', [
       {
         kind: 'output',
-        text: 'lo strumento ha restituito: is_error=True\n{"errorCategory": "transient", "isRetryable": true,\n "description": "Timeout del motore di ricerca dopo 30 secondi"}',
+        text: 'lo strumento ha restituito: is_error=True\n{"errorCategory": "transient", "isRetryable": true, "description": "Timeout del motore di ricerca dopo 30 secondi", "attempted_query": "politica di reso dispositivi elettronici sopra 500 euro"}',
         tone: 'error',
         path: ['claude', 'tool', 'kb'],
       },
       {
         kind: 'output',
-        text: 'risposta di Claude:\nNon sono riuscito a consultare la knowledge base: la ricerca è andata in timeout. Il problema sembra temporaneo, vuole che riprovi?',
-        path: ['tool', 'claude', 'answer'],
+        text: '(altre due chiamate con lo stesso errore; nell’ultima la query è "reso elettronica")',
+        tone: 'muted',
+        path: ['tool', 'claude', 'tool'],
+        note: 'isRetryable: true gli dice che riprovare ha senso, e lo fa.',
+      },
+      {
+        kind: 'output',
+        text: 'risposta di Claude:\nAl momento non riesco a consultare la knowledge base: la ricerca è andata in timeout per tre volte di seguito, anche con una query più semplice. Per questo non posso dirti con certezza qual è la politica di reso […] Se vuoi, riprovo io adesso.',
+        path: ['claude', 'answer'],
         observe: [0],
         note: 'Sa che non ha cercato davvero, quindi non afferma nulla sulla politica.',
       },
@@ -84,24 +94,18 @@ export const d2Errors: Exercise = {
     buildScene('soppressione', '3. Soppressione', [
       {
         kind: 'output',
-        text: '(il servizio è giù, ma lo strumento non lo dice)',
-        tone: 'muted',
-        path: ['claude', 'tool', 'kb'],
-      },
-      {
-        kind: 'output',
-        text: 'lo strumento ha restituito: is_error=False  {"results": []}',
+        text: EMPTY_RESULTS,
         tone: 'info',
-        path: ['tool', 'claude'],
+        path: ['claude', 'tool', 'kb'],
         observe: [2],
-        note: 'Identico alla scena 1: in server_mcp.py i due rami restituiscono la stessa cosa.',
+        note: 'Qui il servizio è giù, ma lo strumento non lo dice: output identico alla scena 1.',
       },
       {
         kind: 'output',
-        text: 'risposta di Claude:\nNella knowledge base non esiste una politica di reso specifica per questi prodotti.',
-        path: ['claude', 'answer'],
+        text: 'risposta di Claude:\nNon ho trovato nella knowledge base nessun articolo sulla politica di reso, né per i dispositivi elettronici sopra i 500 euro né in generale. Preferisco non darti informazioni inventate. […]',
+        path: ['tool', 'claude', 'answer'],
         observe: [1],
-        note: 'Detto con sicurezza, ma nessuno ha potuto controllare: il cliente riceve un’informazione falsa.',
+        note: 'In questa prova il tono è prudente, ma non segnala il guasto: il cliente crede che la ricerca sia riuscita.',
       },
     ]),
   ],

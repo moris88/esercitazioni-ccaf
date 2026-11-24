@@ -19,10 +19,10 @@ export const d2Descriptions: Exercise = {
       id: 'confronto',
       label: '1. Le stesse richieste',
       simulator: 'terminal',
-      source: 'esempio',
-      title: 'kit/claude-p',
+      source: 'reale',
+      title: 'kit/claude-p · modello sonnet',
       steps: [
-        { kind: 'command', text: 'python strumenti_ambigui.py' },
+        { kind: 'command', text: 'CLAUDE_MODEL=sonnet python strumenti_ambigui.py' },
         { kind: 'divider', text: '===== DESCRIZIONI VAGHE' },
         {
           kind: 'output',
@@ -35,13 +35,13 @@ export const d2Descriptions: Exercise = {
           columns: ['Richiesta', 'Strumento scelto'],
           rows: [
             ['«Terzo ritardo in un mese…» Come si sente?', 'analyze_content'],
-            ['«Fattura 2026-118…» Quanto è il totale?', 'analyze_document'],
-            ['Recensione: è soddisfatto?', '(nessuno strumento: risposta testuale)'],
-            ['Ricevuta del bar: estrai l’importo', 'analyze_content'],
+            ['«Fattura 2026-118…» Quanto è il totale?', '(nessuno strumento: risposta testuale)'],
+            ['Recensione: è soddisfatto?', 'analyze_content'],
+            ['Ricevuta del bar: estrai l’importo', '(nessuno strumento: risposta testuale)'],
           ],
-          highlight: [2, 3],
+          highlight: [1, 3],
           observe: [0],
-          note: 'Due messaggi di clienti trattati in modo diverso; fattura e ricevuta a strumenti diversi.',
+          note: 'analyze_document non è mai stato scelto, nemmeno per la fattura. Un’altra prova può dare risultati diversi.',
         },
         { kind: 'divider', text: '===== DESCRIZIONI CHIARE' },
         {
