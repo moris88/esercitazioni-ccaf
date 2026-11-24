@@ -1,6 +1,6 @@
-import { useEffect, useRef } from 'react';
 import type { Scene } from '../types';
 import { StepView } from './StepView';
+import { useFollowScroll } from './useFollowScroll';
 
 interface SimulatorPaneProps {
   scene: Scene;
@@ -10,13 +10,7 @@ interface SimulatorPaneProps {
 }
 
 export function SimulatorPane({ scene, pane, index, progress }: SimulatorPaneProps) {
-  const bottomRef = useRef<HTMLDivElement>(null);
-
-  // Segue l'ultima riga, anche mentre il testo si allunga
-  // biome-ignore lint/correctness/useExhaustiveDependencies: lo scroll dipende dall'avanzamento
-  useEffect(() => {
-    bottomRef.current?.scrollIntoView({ block: 'nearest' });
-  }, [index, progress]);
+  const bottomRef = useFollowScroll(index, progress);
 
   return (
     <div className="flex min-h-0 min-w-0 flex-1 flex-col">

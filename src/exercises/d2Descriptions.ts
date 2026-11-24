@@ -9,7 +9,7 @@ export const d2Descriptions: Exercise = {
   minutes: 8,
   goal: 'Misurare quanto la descrizione guida la scelta dello strumento.',
   observe: [
-    'Con le descrizioni vaghe la scelta è incerta o incoerente tra richieste simili.',
+    'Con le descrizioni vaghe la scelta è poco affidabile: in questa prova fattura e ricevuta non attivano nessuno strumento.',
     'Con le descrizioni chiare ogni richiesta va allo strumento giusto.',
     'La descrizione riscritta dice anche quando NON usare lo strumento.',
   ],

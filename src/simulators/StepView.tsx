@@ -1,5 +1,4 @@
 import type { Simulator, Step, Tone } from '../types';
-import { ChatMessage } from './ChatMessage';
 import { CommandLine } from './CommandLine';
 import { ContextMeter } from './ContextMeter';
 import { PermissionPrompt } from './PermissionPrompt';
@@ -42,8 +41,6 @@ export function StepView({ step, simulator, progress }: StepViewProps) {
         </div>
       );
     case 'message':
-      if (simulator === 'chat')
-        return <ChatMessage role={step.role} text={visible(step.text)} attachment={step.attachment} />;
       return step.role === 'user' ? (
         <CommandLine prompt=">" text={visible(step.text)} typing={typing} />
       ) : (

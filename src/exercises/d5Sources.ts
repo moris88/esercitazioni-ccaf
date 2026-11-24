@@ -72,7 +72,8 @@ export const d5Sources: Exercise = {
         {
           kind: 'message',
           role: 'assistant',
-          text: `{
+          text: `\`\`\`json
+{
   "claim": "Ricavi Q4 2025",
   "livello": "contestato",
   "valori": [
@@ -80,21 +81,24 @@ export const d5Sources: Exercise = {
     { "valore": "2,28 mld", "fonte": "Bilancio", "data_pubblicazione": "2026-02-28", "confidenza": 0.95 }
   ],
   "fa_fede": "Bilancio: dati revisionati e più recenti"
-}`,
+}
+\`\`\``,
           observe: [1],
           note: 'Estratto: entrambi i valori restano visibili, con la ragione della scelta.',
         },
         {
           kind: 'message',
           role: 'assistant',
-          text: `{
+          text: `\`\`\`json
+{
   "claim": "Possibile acquisizione nel 2026",
   "livello": "fonte singola",
   "fonte": "Blog di finanza",
   "data_pubblicazione": "2026-01-20",
   "data_raccolta": "2026-02-10",
   "confidenza": 0.2
-}`,
+}
+\`\`\``,
           observe: [2],
         },
         {

@@ -11,3 +11,5 @@
 - [x] D4-2, D4-3
 - [x] D5-1, D5-2, D5-3
 - [ ] Check on the real projector
+- [x] Realistic chat UI
+- [x] P-1 to P-7 (pre-course areas)

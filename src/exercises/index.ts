@@ -16,10 +16,24 @@ import { d4Review } from './d4Review';
 import { d5Context } from './d5Context';
 import { d5Escalation } from './d5Escalation';
 import { d5Sources } from './d5Sources';
+import { p1Formats } from './p1Formats';
+import { p2Network } from './p2Network';
+import { p3Shell } from './p3Shell';
+import { p4Development } from './p4Development';
+import { p5Data } from './p5Data';
+import { p6Ai } from './p6Ai';
+import { p7Architecture } from './p7Architecture';
 
 /** In ordine di programma */
 export const exercises: Exercise[] = [
   d0Basics,
+  p1Formats,
+  p2Network,
+  p3Shell,
+  p4Development,
+  p5Data,
+  p6Ai,
+  p7Architecture,
   d1Loop,
   d1Subagents,
   d1Hook,

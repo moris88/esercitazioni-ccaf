@@ -49,7 +49,7 @@ export const d2Errors: Exercise = {
   goal: 'Vedere come cambia la risposta di Claude se lo strumento restituisce un risultato vuoto, un errore strutturato o un guasto nascosto.',
   observe: [
     'Con l’errore strutturato Claude dice che non è riuscito a cercare e propone di riprovare.',
-    'Con la soppressione dice con sicurezza che non c’è nulla: un’affermazione falsa.',
+    'Con la soppressione Claude crede che la ricerca sia riuscita: dice che non ha trovato nulla, senza segnalare il guasto.',
     'Claude non può distinguere ciò che lo strumento non gli dice.',
   ],
   exam: '[] con 200 = informazione; timeout = errore; mai soppressione silenziosa.',

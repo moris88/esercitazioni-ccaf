@@ -2,7 +2,7 @@
 
 Presentation app for the CCA-F course: scripted, animated simulations. No backend and no calls to Claude.
 
-- `src/exercises/`: one data file per exercise; texts come from `../Esercitazioni_pratiche.pdf`.
+- `src/exercises/`: one data file per exercise; texts come from `../Esercitazioni_pratiche.pdf`; `p1`-`p7` come from `../../pre-corso/prerequisiti.pdf`.
 - `src/player/`: playback engine. `playerReducer.ts` is pure and tested.
 - `src/simulators/`: step rendering for terminal, chat and Claude Code.
 - `src/diagrams/`: data-driven flow diagram.

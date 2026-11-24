@@ -62,7 +62,8 @@ export const d0Basics: Exercise = {
         {
           kind: 'message',
           role: 'assistant',
-          text: `{
+          text: `\`\`\`json
+{
   "type": "object",
   "properties": {
     "id": { "type": "string" },
@@ -71,7 +72,8 @@ export const d0Basics: Exercise = {
     "note": { "type": ["string", "null"] }
   },
   "required": ["id", "totale"]
-}`,
+}
+\`\`\``,
           observe: [1],
           note: 'Un totale di -5 è valido per questo schema: la forma è giusta, il dato no.',
         },
@@ -92,7 +94,9 @@ export const d0Basics: Exercise = {
         {
           kind: 'message',
           role: 'assistant',
-          text: `^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/[0-9]{4}$
+          text: `\`\`\`regex
+^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/[0-9]{4}$
+\`\`\`
 
 Sì, accetta 31/02/2026: controlla separatamente giorno e mese, ma non sa quanti giorni ha febbraio. Per la validità reale serve del codice che conosca il calendario.`,
           observe: [2],
