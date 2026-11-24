@@ -14,6 +14,7 @@
   --animate-enter: enter 0.35s ease-out;
   --animate-blink: blink 1s steps(2) infinite;
   --animate-flow: flow 0.7s linear infinite;
+  --animate-grow: grow 1.2s ease-out;
 
   @keyframes enter {
     from {
@@ -24,6 +25,11 @@
   @keyframes blink {
     50% {
       opacity: 0;
+    }
+  }
+  @keyframes grow {
+    from {
+      transform: scaleX(0);
     }
   }
   @keyframes flow {

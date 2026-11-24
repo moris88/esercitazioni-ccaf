@@ -1,10 +1,39 @@
 import type { Exercise } from '../types';
+import { d0Basics } from './d0Basics';
 import { d1Hook } from './d1Hook';
 import { d1Loop } from './d1Loop';
+import { d1Sessions } from './d1Sessions';
+import { d1Subagents } from './d1Subagents';
+import { d2Descriptions } from './d2Descriptions';
+import { d2Errors } from './d2Errors';
+import { d2Mcp } from './d2Mcp';
+import { d3Memory } from './d3Memory';
+import { d3Pipeline } from './d3Pipeline';
+import { d3Skills } from './d3Skills';
 import { d4Criteria } from './d4Criteria';
-import { upcomingExercises } from './upcoming';
+import { d4Invoice } from './d4Invoice';
+import { d4Review } from './d4Review';
+import { d5Context } from './d5Context';
+import { d5Escalation } from './d5Escalation';
+import { d5Sources } from './d5Sources';
 
-/** In ordine di programma: "0", poi D1·1, D1·2 e così via */
-export const exercises: Exercise[] = [d1Loop, d1Hook, d4Criteria, ...upcomingExercises].sort((a, b) =>
-  a.id.localeCompare(b.id),
-);
+/** In ordine di programma */
+export const exercises: Exercise[] = [
+  d0Basics,
+  d1Loop,
+  d1Subagents,
+  d1Hook,
+  d1Sessions,
+  d2Descriptions,
+  d2Errors,
+  d2Mcp,
+  d3Memory,
+  d3Skills,
+  d3Pipeline,
+  d4Criteria,
+  d4Invoice,
+  d4Review,
+  d5Context,
+  d5Escalation,
+  d5Sources,
+];

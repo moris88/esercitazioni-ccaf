@@ -1,6 +1,7 @@
 import type { Simulator, Step, Tone } from '../types';
 import { ChatMessage } from './ChatMessage';
 import { CommandLine } from './CommandLine';
+import { ContextMeter } from './ContextMeter';
 import { PermissionPrompt } from './PermissionPrompt';
 import { StepTable } from './StepTable';
 import { ToolCall } from './ToolCall';
@@ -33,7 +34,13 @@ export function StepView({ step, simulator, progress }: StepViewProps) {
         <div className={`whitespace-pre-wrap break-words ${TONES[step.tone ?? 'normal']}`}>{step.text}</div>
       );
     case 'divider':
-      return <div className="mt-2 border-b border-current/30 pb-1 font-bold text-[#e08a7a]">{step.text}</div>;
+      return (
+        <div
+          className={`mt-2 border-b border-current/30 pb-1 font-bold ${simulator === 'chat' ? 'text-accent' : 'text-[#e08a7a]'}`}
+        >
+          {step.text}
+        </div>
+      );
     case 'message':
       if (simulator === 'chat')
         return <ChatMessage role={step.role} text={visible(step.text)} attachment={step.attachment} />;
@@ -43,9 +50,11 @@ export function StepView({ step, simulator, progress }: StepViewProps) {
         <div className="whitespace-pre-wrap text-[#f3eeea]">{visible(step.text)}</div>
       );
     case 'table':
-      return <StepTable table={step} />;
+      return <StepTable table={step} dark={simulator !== 'chat'} />;
     case 'tool':
       return <ToolCall tool={step} />;
+    case 'meter':
+      return <ContextMeter meter={step} />;
     case 'permission':
       return <PermissionPrompt permission={step} />;
   }

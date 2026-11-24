@@ -1,0 +1,125 @@
+import type { Exercise } from '../types';
+
+export const d3Skills: Exercise = {
+  id: 'd3-2',
+  code: 'D3·2',
+  lesson: 'Skill, plan mode e subagenti',
+  title: 'Una skill, il plan mode e un subagente personalizzato',
+  place: 'Claude Code',
+  minutes: 10,
+  goal: 'Creare e usare una skill, provare il plan mode su una modifica ampia e usare un subagente in sola lettura.',
+  observe: [
+    'La skill parte anche senza /, perché la description descrive quando usarla.',
+    'In plan mode Claude esplora e propone un piano, ma non modifica nulla finché non approvate.',
+    'Il revisore ha solo Read, Grep e Glob: non può modificare i file.',
+  ],
+  exam: 'description = invocazione automatica; plan mode per molti file; strumenti limitati per i subagenti.',
+  scenes: [
+    {
+      id: 'skill',
+      label: '1. Skill',
+      simulator: 'code',
+      source: 'esempio',
+      title: 'repo-prova',
+      steps: [
+        { kind: 'command', text: '/spiega-componente src/components/Button.tsx' },
+        { kind: 'tool', name: 'Read', input: 'src/components/Button.tsx', status: 'ok' },
+        {
+          kind: 'message',
+          role: 'assistant',
+          text: '1. A cosa serve: mostra un pulsante colorato.\n2. Props: children, variant, onClick.\n3. Stato ed effetti: nessuno.\n4. Dove viene usato: Header.tsx.\n5. Rischio: i colori sono scritti a mano.',
+          note: 'I cinque punti arrivano da SKILL.md.',
+        },
+        { kind: 'message', role: 'user', text: 'Come funziona il componente Header?' },
+        {
+          kind: 'tool',
+          name: 'Skill',
+          input: 'spiega-componente',
+          result: 'Skill caricata',
+          status: 'ok',
+          observe: [0],
+          note: 'Nessuna barra: la domanda corrisponde alla description della skill.',
+        },
+        {
+          kind: 'message',
+          role: 'assistant',
+          text: '1. A cosa serve: mostra titolo e menu.\n2. Props: title.\n3. Stato: menuOpen, per aprire e chiudere il menu.\n4. Dove viene usato: App.tsx.\n5. Miglioramento: aggiungere aria-expanded al pulsante.',
+        },
+      ],
+    },
+    {
+      id: 'plan',
+      label: '2. Plan mode',
+      simulator: 'code',
+      source: 'esempio',
+      title: 'repo-prova · plan mode',
+      steps: [
+        { kind: 'output', text: '⏸ plan mode attivo (Shift+Tab)', tone: 'info' },
+        {
+          kind: 'message',
+          role: 'user',
+          text: 'Sostituisci tutti i colori scritti a mano nei componenti con variabili del tema.',
+        },
+        {
+          kind: 'tool',
+          name: 'Grep',
+          input: '#[0-9a-f]{6} in src/components',
+          result: 'Button.tsx, Header.tsx, OrderCard.tsx, LegacyBanner.tsx',
+          status: 'ok',
+        },
+        {
+          kind: 'message',
+          role: 'assistant',
+          text: 'Piano:\n1. Creare src/theme.css con le variabili.\n2. Sostituire i colori nei 4 componenti.\n3. Eseguire test e build.',
+        },
+        {
+          kind: 'permission',
+          question: 'Approvi il piano?',
+          options: ['Sì, procedi', 'No, continua a pianificare'],
+          choice: 1,
+          observe: [1],
+          note: 'Solo letture finora: nessun file è cambiato.',
+        },
+      ],
+    },
+    {
+      id: 'revisore',
+      label: '3. Subagente revisore',
+      simulator: 'code',
+      source: 'esempio',
+      title: 'repo-prova',
+      steps: [
+        {
+          kind: 'message',
+          role: 'user',
+          text: 'Usa revisore-sola-lettura per rivedere le modifiche dell’ultimo commit.',
+        },
+        {
+          kind: 'tool',
+          name: 'Bash',
+          input: 'git show --stat HEAD',
+          result: 'src/components/Button.tsx, src/components/OrderCard.tsx …',
+          status: 'ok',
+          note: 'Il revisore non ha Bash: il coordinatore deve dirgli quali file guardare.',
+        },
+        {
+          kind: 'tool',
+          name: 'Agent',
+          input: 'revisore-sola-lettura · file dell’ultimo commit',
+          result: 'Strumenti: Read, Grep, Glob',
+          status: 'ok',
+          observe: [2],
+        },
+        {
+          kind: 'table',
+          columns: ['File', 'Gravità', 'Problema'],
+          rows: [
+            ['Button.tsx', 'media', 'test mancante sulla scelta del colore'],
+            ['OrderCard.tsx', 'bassa', 'nessun test sul totale mostrato'],
+          ],
+          note: 'Segnala senza correggere: per costruzione non ha strumenti di scrittura.',
+        },
+      ],
+    },
+  ],
+};

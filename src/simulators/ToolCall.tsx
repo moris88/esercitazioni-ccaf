@@ -17,7 +17,7 @@ export function ToolCall({ tool }: ToolCallProps) {
       <div className="flex flex-wrap items-center gap-2 text-white">
         <span className={`size-3 rounded-full ${status.dot}`} />
         <span className="font-bold">{tool.name}</span>
-        <span className="break-all">({tool.input})</span>
+        <span className="min-w-0 break-words">({tool.input})</span>
         {status.label && (
           <span className="rounded bg-[#f0907f] px-2 text-sm font-bold text-ink">{status.label}</span>
         )}

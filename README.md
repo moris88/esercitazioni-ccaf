@@ -24,7 +24,7 @@ F11 mette il browser a schermo intero; la linguetta ‹ nasconde l'elenco.
 ## Modificare o aggiungere un'esercitazione
 
 Ogni esercitazione è un file in `src/exercises/`, descritto dai tipi in `src/types.ts`. Per animarne una nuova:
-creare il file, importarlo in `src/exercises/index.ts` e togliere la voce da `src/exercises/upcoming.ts`.
+creare il file e aggiungerlo a `src/exercises/index.ts`.
 
 Ogni scena dichiara `source`: `reale` (output registrato), `esempio` (scritto per la lezione) o `kit`
 (dati del kit). L'etichetta compare sempre nella finestra simulata.

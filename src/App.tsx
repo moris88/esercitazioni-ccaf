@@ -7,8 +7,7 @@ import { useHash } from './useHash';
 export function App() {
   const hash = useHash();
   const [menuOpen, setMenuOpen] = useState(true);
-  const ready = exercises.filter(({ scenes }) => scenes.length > 0);
-  const current = ready.find(({ id }) => id === hash) ?? ready[0];
+  const current = exercises.find(({ id }) => id === hash) ?? exercises[0];
 
   return (
     <div className="flex h-screen">

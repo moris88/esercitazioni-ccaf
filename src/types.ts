@@ -51,6 +51,13 @@ export interface PermissionStep extends StepBase {
   choice: number;
 }
 
+/** Spazio occupato nella finestra di contesto */
+export interface MeterStep extends StepBase {
+  kind: 'meter';
+  label: string;
+  percent: number;
+}
+
 export type Step =
   | CommandStep
   | OutputStep
@@ -58,7 +65,8 @@ export type Step =
   | MessageStep
   | TableStep
   | ToolStep
-  | PermissionStep;
+  | PermissionStep
+  | MeterStep;
 
 export interface DiagramNode {
   id: string;
@@ -101,6 +109,5 @@ export interface Exercise {
   goal: string;
   observe: string[];
   exam: string;
-  /** Vuoto se l'animazione non è ancora pronta */
   scenes: Scene[];
 }

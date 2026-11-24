@@ -2,12 +2,13 @@ import type { TableStep } from '../types';
 
 interface StepTableProps {
   table: TableStep;
+  dark: boolean;
 }
 
 /** Tabella le cui righe compaiono una dopo l'altra */
-export function StepTable({ table }: StepTableProps) {
+export function StepTable({ table, dark }: StepTableProps) {
   return (
-    <div className="overflow-x-auto">
+    <div className={`overflow-x-auto ${dark ? 'text-[#f3eeea]' : ''}`}>
       <table className="w-full border-collapse text-left text-[0.9em]">
         <thead>
           <tr className="border-b-2 border-accent">
@@ -22,7 +23,7 @@ export function StepTable({ table }: StepTableProps) {
           {table.rows.map((row, rowIndex) => (
             <tr
               key={row[0]}
-              className={`animate-enter border-b border-line ${table.highlight?.includes(rowIndex) ? 'bg-blush font-bold' : ''}`}
+              className={`animate-enter border-b border-line ${table.highlight?.includes(rowIndex) ? 'bg-blush font-bold text-ink' : ''}`}
               style={{ animationDelay: `${rowIndex * 150}ms`, animationFillMode: 'backwards' }}
             >
               {row.map((cell, cellIndex) => (

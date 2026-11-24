@@ -30,11 +30,8 @@ describe('exercises', () => {
     }
   });
 
-  it.each(exercises.filter(({ scenes }) => scenes.length > 0))(
-    'dovrebbe rivelare tutti i punti da osservare in $code',
-    (exercise) => {
-      const revealed = exercise.scenes.flatMap((s) => s.steps.flatMap((step) => step.observe ?? []));
-      expect(new Set(revealed).size).toBe(exercise.observe.length);
-    },
-  );
+  it.each(exercises)('dovrebbe rivelare tutti i punti da osservare in $code', (exercise) => {
+    const revealed = exercise.scenes.flatMap((s) => s.steps.flatMap((step) => step.observe ?? []));
+    expect(new Set(revealed).size).toBe(exercise.observe.length);
+  });
 });
