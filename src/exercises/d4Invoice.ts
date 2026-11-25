@@ -14,12 +14,15 @@ const diagram: Diagram = {
   ],
 };
 
+export const INVOICE_PROMPT =
+  "Estrai i dati di questa fattura in JSON, seguendo lo schema. totale_calcolato è la somma dei totali di riga. Se un dato non c'è usa null; se lo stato di pagamento non è chiaro usa unclear. Rispondi solo con il JSON.";
+
 export const d4Invoice: Exercise = {
   id: 'd4-2',
   code: 'D4·2',
   lesson: 'Output strutturato e convalida',
   title: 'Estrarre una fattura con uno schema',
-  place: 'Claude Code da terminale (o una chat)',
+  place: 'Claude (app o claude.ai)',
   minutes: 10,
   goal: 'Ottenere un JSON conforme a uno schema e scoprire che la forma giusta non garantisce i dati giusti.',
   observe: [
@@ -33,15 +36,18 @@ export const d4Invoice: Exercise = {
     {
       id: 'fattura',
       label: '1. La fattura',
-      simulator: 'terminal',
+      description:
+        'La fattura da cui estrarre i dati. Provate a sommare le righe e a confrontare il risultato con l’imponibile.',
+      simulator: 'chat',
       source: 'kit',
       title: 'kit/dati/fattura.txt (estratto)',
       diagram,
       steps: [
-        { kind: 'command', text: 'cat ../kit/dati/fattura.txt' },
         {
-          kind: 'output',
-          text: `ACME FORNITURE SRL
+          kind: 'message',
+          role: 'assistant',
+          text: `\`\`\`
+ACME FORNITURE SRL
 FATTURA N. 2026/118 del 03/11/2026
 
 Descrizione               Q.tà   Prezzo unit.    Totale
@@ -53,7 +59,8 @@ Cavo HDMI 2 m               4         8,50        34,00
                               IVA 22%             99,00
                               TOTALE             549,00
 
-Modalità di pagamento: bonifico a 30 giorni.`,
+Modalità di pagamento: bonifico a 30 giorni.
+\`\`\``,
           path: ['invoice'],
           note: 'Domanda al team: che cosa non torna?',
         },
@@ -62,35 +69,36 @@ Modalità di pagamento: bonifico a 30 giorni.`,
     {
       id: 'estrazione',
       label: '2. Estrazione',
-      simulator: 'terminal',
+      description:
+        'In chat si allegano fattura e schema. Claude risponde con i dati in forma ordinata: guardate i campi null e unclear.',
+      simulator: 'chat',
       source: 'reale',
-      title: 'campo structured_output',
+      title: 'risposta registrata con claude -p · modello sonnet',
       diagram,
       steps: [
         {
-          kind: 'command',
-          text: 'cat ../kit/dati/fattura.txt | claude -p "Estrai i dati di questa fattura. totale_calcolato è la somma dei totali di riga. Se un dato non c\'è usa null; se lo stato di pagamento non è chiaro usa unclear." --output-format json --json-schema "$(cat ../kit/claude-code/ci/schema_fattura.json)" --model sonnet --no-session-persistence',
+          kind: 'message',
+          role: 'user',
+          attachment: 'fattura.txt e schema_fattura.json',
+          text: INVOICE_PROMPT,
           path: ['invoice', 'claude'],
         },
         {
-          kind: 'output',
-          text: '"fornitore": "ACME FORNITURE SRL",\n"numero_fattura": "2026/118",\n"numero_ordine_acquisto": null,',
+          kind: 'message',
+          role: 'assistant',
+          text: `\`\`\`json
+{
+  "fornitore": "ACME FORNITURE SRL",
+  "numero_fattura": "2026/118",
+  "numero_ordine_acquisto": null,
+  "righe": […],
+  "totale_dichiarato": 549.00,
+  "totale_calcolato": 484.00,
+  "stato_pagamento": "unclear"
+}
+\`\`\``,
           path: ['claude', 'schema'],
-          observe: [0],
-        },
-        {
-          kind: 'output',
-          text: `"righe": [
-  {"descrizione": "Monitor 27 pollici", "quantita": 2, "prezzo_unitario": 180, "totale_riga": 360},
-  {"descrizione": "Supporto da scrivania", "quantita": 2, "prezzo_unitario": 45, "totale_riga": 90},
-  {"descrizione": "Cavo HDMI 2 m", "quantita": 4, "prezzo_unitario": 8.5, "totale_riga": 34}
-],`,
-          tone: 'muted',
-        },
-        {
-          kind: 'output',
-          text: '"totale_dichiarato": 549,\n"totale_calcolato": 484,\n"stato_pagamento": "unclear"',
-          observe: [1],
+          observe: [0, 1],
           note: 'Attenzione: 549 comprende l’IVA, 484 no. Il confronto giusto è 484 contro l’imponibile, 450.',
         },
       ],
@@ -98,6 +106,8 @@ Modalità di pagamento: bonifico a 30 giorni.`,
     {
       id: 'controllo',
       label: '3. Il controllo nel codice',
+      description:
+        'Un controllo automatico confronta la somma delle righe con l’imponibile dichiarato e segnala la differenza.',
       simulator: 'terminal',
       source: 'esempio',
       title: 'controllo deterministico',

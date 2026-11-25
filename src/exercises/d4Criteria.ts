@@ -21,6 +21,8 @@ export const d4Criteria: Exercise = {
     {
       id: 'email',
       label: '1. Le 8 email',
+      description:
+        'Le otto email di supporto usate nell’esercizio. Leggetele prima di vedere come le classifica Claude.',
       simulator: 'chat',
       source: 'kit',
       title: 'email_supporto.txt',
@@ -48,6 +50,8 @@ export const d4Criteria: Exercise = {
     {
       id: 'confronto',
       label: '2. Vago contro criteri',
+      description:
+        'Le stesse email in due chat. A sinistra la richiesta è generica, a destra ci sono criteri ed esempi: confrontate la colonna urgenza.',
       simulator: 'chat',
       source: 'esempio',
       title: 'due chat nuove',

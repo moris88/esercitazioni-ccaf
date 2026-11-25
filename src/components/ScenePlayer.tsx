@@ -24,6 +24,10 @@ export function ScenePlayer({ exercise, scene }: ScenePlayerProps) {
   return (
     <div className="flex min-h-0 flex-1">
       <div className="flex min-w-0 flex-1 flex-col gap-4 p-5">
+        <p className="rounded-lg bg-sand px-4 py-3">
+          <span className="font-bold text-accent">Cosa vediamo: </span>
+          {scene.description}
+        </p>
         <SimulatorWindow scene={scene} chatTitle={exercise.title} index={index} progress={progress} />
         <div aria-live="polite" className="min-h-14">
           {note && (

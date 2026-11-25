@@ -14,12 +14,12 @@ const diagram: Diagram = {
   ],
 };
 
-export const p7Architecture: Exercise = {
-  id: 'p-7',
-  code: 'P·7',
+export const p8Architecture: Exercise = {
+  id: 'p-8',
+  code: 'P·8',
   lesson: 'Pre-corso · Architettura e affidabilità',
   title: 'Orchestrazione, guasti parziali ed escalation',
-  place: 'Integrazione dal pre-corso',
+  place: 'Claude (app o claude.ai)',
   minutes: 8,
   goal: 'Vedere come i componenti collaborano, che cosa succede se uno si guasta e quando serve una persona.',
   observe: [
@@ -33,6 +33,8 @@ export const p7Architecture: Exercise = {
     {
       id: 'parallelo',
       label: '1. Parallelo o sequenziale',
+      description:
+        'Due lavori fatti insieme a sinistra, uno dopo l’altro a destra. I secondi indicano quando parte e finisce ciascuno.',
       simulator: 'terminal',
       source: 'esempio',
       title: 'tempi di esempio',
@@ -72,6 +74,8 @@ export const p7Architecture: Exercise = {
     {
       id: 'degradazione',
       label: '2. Guasto parziale',
+      description:
+        'Il servizio spedizioni non risponde. A sinistra la risposta lo nasconde, a destra dice che cosa manca.',
       simulator: 'chat',
       source: 'esempio',
       title: 'servizio spedizioni non disponibile',
@@ -112,6 +116,8 @@ export const p7Architecture: Exercise = {
     {
       id: 'escalation',
       label: '3. Persona nel ciclo',
+      description:
+        'Un rimborso supera il limite automatico: l’azione si ferma e la decisione passa a una persona, con un riepilogo.',
       simulator: 'code',
       source: 'esempio',
       title: 'rimborso sopra il limite',
@@ -141,6 +147,8 @@ export const p7Architecture: Exercise = {
     {
       id: 'sla',
       label: '4. SLA',
+      description:
+        'Tre tempi di risposta promessi al cliente e, per ciascuno, la scelta tra risposta immediata ed elaborazione in blocco.',
       simulator: 'terminal',
       source: 'esempio',
       title: 'tempo reale o batch?',

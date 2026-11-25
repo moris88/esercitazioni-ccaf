@@ -88,6 +88,8 @@ export type Simulator = 'terminal' | 'chat' | 'code';
 export interface Scene {
   id: string;
   label: string;
+  /** Spiega a chi guarda che cosa si vede a schermo */
+  description: string;
   simulator: Simulator;
   /** "reale": output registrato; "esempio": scritto per la lezione; "kit": dati del kit */
   source: 'reale' | 'esempio' | 'kit';

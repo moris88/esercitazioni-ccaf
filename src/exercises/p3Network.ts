@@ -11,12 +11,12 @@ const diagram: Diagram = {
   ],
 };
 
-export const p2Network: Exercise = {
-  id: 'p-2',
-  code: 'P·2',
+export const p3Network: Exercise = {
+  id: 'p-3',
+  code: 'P·3',
   lesson: 'Pre-corso · Reti e API',
   title: 'HTTP, retry, idempotenza e batch',
-  place: 'Integrazione dal pre-corso',
+  place: 'Claude (app o claude.ai)',
   minutes: 10,
   goal: 'Leggere una richiesta HTTP e decidere, dal codice di stato, se riprovare, correggere o fermarsi.',
   observe: [
@@ -31,6 +31,8 @@ export const p2Network: Exercise = {
     {
       id: 'http',
       label: '1. Richiesta e risposta',
+      description:
+        'Un programma chiede al server di creare un cliente: in alto la richiesta, sotto la risposta. La tabella spiega i codici più comuni.',
       simulator: 'terminal',
       source: 'esempio',
       title: 'API REST',
@@ -68,6 +70,8 @@ export const p2Network: Exercise = {
     {
       id: 'retry',
       label: '2. Retry e backoff',
+      description:
+        'Un programma riprova dopo un errore temporaneo, aspettando ogni volta di più. Nel secondo caso l’errore è permanente e non riprova.',
       simulator: 'terminal',
       source: 'esempio',
       title: 'client con retry',
@@ -97,6 +101,8 @@ export const p2Network: Exercise = {
     {
       id: 'idempotenza',
       label: '3. Idempotenza',
+      description:
+        'Lo stesso rimborso ripetuto dopo un timeout. A sinistra viene pagato due volte, a destra una chiave evita il doppione.',
       simulator: 'terminal',
       source: 'esempio',
       title: 'rimborso di 50 euro',
@@ -140,6 +146,8 @@ export const p2Network: Exercise = {
     {
       id: 'webhook',
       label: '4. Webhook',
+      description:
+        'Un servizio esterno avvisa il nostro sistema di un nuovo ticket. L’avviso arriva due volte, ma viene gestito una sola.',
       simulator: 'terminal',
       source: 'esempio',
       title: 'ricevitore di eventi',
@@ -174,6 +182,8 @@ export const p2Network: Exercise = {
     {
       id: 'batch',
       label: '5. Sincrono o batch',
+      description:
+        'Quattro situazioni da assegnare: risposta immediata o elaborazione in blocco. La tabella dà la soluzione.',
       simulator: 'terminal',
       source: 'esempio',
       title: 'quale scegliere?',

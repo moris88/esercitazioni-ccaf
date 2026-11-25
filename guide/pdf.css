@@ -1,0 +1,105 @@
+@page {
+  size: A4;
+  margin: 18mm 17mm 20mm;
+  @bottom-left {
+    font:
+      8pt Verdana,
+      sans-serif;
+    color: #7a706a;
+  }
+  @bottom-right {
+    content: counter(page);
+    font:
+      8pt Verdana,
+      sans-serif;
+    color: #7a706a;
+  }
+}
+* {
+  box-sizing: border-box;
+  -webkit-print-color-adjust: exact;
+}
+body {
+  margin: 0;
+  font:
+    9.5pt / 1.45 Verdana,
+    "Segoe UI",
+    sans-serif;
+  color: #2b2522;
+}
+.page + .page {
+  break-before: page;
+}
+h1 {
+  margin: 0 0 6pt;
+  font:
+    bold 20pt / 1.2 Georgia,
+    serif;
+}
+h2 {
+  margin: 12pt 0 4pt;
+  font-size: 9pt;
+  color: #b85042;
+  text-transform: uppercase;
+  break-after: avoid;
+}
+p {
+  margin: 0 0 6pt;
+}
+.kicker {
+  font-size: 8.5pt;
+  font-weight: bold;
+  color: #b85042;
+  text-transform: uppercase;
+}
+.muted {
+  color: #7a706a;
+}
+ul,
+ol {
+  margin: 0;
+  padding-left: 16pt;
+}
+li {
+  margin-bottom: 4pt;
+}
+.check {
+  list-style: "☐  ";
+}
+pre {
+  margin: 4pt 0 6pt;
+  padding: 7pt 9pt;
+  border-left: 3pt solid #b85042;
+  background: #f3eeea;
+  font:
+    8.5pt / 1.4 Consolas,
+    monospace;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  break-inside: avoid;
+}
+.note {
+  margin-top: 10pt;
+  padding: 8pt 10pt;
+  border-radius: 4pt;
+  background: #f6e3de;
+  break-inside: avoid;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 8.5pt;
+}
+th {
+  text-align: left;
+  background: #f3eeea;
+}
+th,
+td {
+  padding: 4pt 5pt;
+  border-bottom: 0.5pt solid #e2d9d2;
+  vertical-align: top;
+}
+tr {
+  break-inside: avoid;
+}

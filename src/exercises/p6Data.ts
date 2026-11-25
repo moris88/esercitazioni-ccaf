@@ -1,11 +1,11 @@
 import type { Exercise } from '../types';
 
-export const p5Data: Exercise = {
-  id: 'p-5',
-  code: 'P·5',
+export const p6Data: Exercise = {
+  id: 'p-6',
+  code: 'P·6',
   lesson: 'Pre-corso · Dati e archiviazione',
   title: 'SQL, transazioni, agenti e dati personali',
-  place: 'Integrazione dal pre-corso',
+  place: 'Claude (app o claude.ai)',
   minutes: 8,
   goal: 'Leggere una query semplice e riconoscere le buone pratiche quando un agente accede a un database.',
   observe: [
@@ -20,6 +20,8 @@ export const p5Data: Exercise = {
     {
       id: 'sql',
       label: '1. SELECT e JOIN',
+      description:
+        'Una domanda a un database scritta in SQL e, sotto, il risultato: nome e totale arrivano da due tabelle diverse.',
       simulator: 'terminal',
       source: 'esempio',
       title: 'database di prova',
@@ -44,6 +46,8 @@ export const p5Data: Exercise = {
     {
       id: 'where',
       label: '2. Il WHERE dimenticato',
+      description:
+        'Lo stesso comando con e senza la riga WHERE. A destra la dimenticanza modifica tutti gli ordini.',
       simulator: 'terminal',
       source: 'esempio',
       title: 'stesso comando, due esiti',
@@ -65,6 +69,7 @@ export const p5Data: Exercise = {
     {
       id: 'transazione',
       label: '3. Transazione',
+      description: 'Un bonifico che si interrompe a metà. Il comando ROLLBACK rimette tutto com’era.',
       simulator: 'terminal',
       source: 'esempio',
       title: 'bonifico di 100 euro',
@@ -83,6 +88,8 @@ export const p5Data: Exercise = {
     {
       id: 'agente',
       label: '4. Database e agenti',
+      description:
+        'Due modi di dare a Claude accesso ai dati: a sinistra può chiedere qualunque cosa, a destra solo ciò che serve.',
       simulator: 'code',
       source: 'esempio',
       title: 'due modi di dare accesso ai dati',
@@ -128,6 +135,8 @@ export const p5Data: Exercise = {
     {
       id: 'pii',
       label: '5. Dati personali',
+      description:
+        'Un messaggio con dati personali, prima e dopo il mascheramento. A Claude si invia solo la versione senza dati.',
       simulator: 'terminal',
       source: 'esempio',
       title: 'mascheramento prima dell’invio',

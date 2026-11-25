@@ -1,16 +1,43 @@
 import type { Exercise } from '../types';
 
+const REQUESTS = `Richieste:
+1. Il cliente ha scritto: "Terzo ritardo in un mese, sono davvero stufo". Come si sente?
+2. Fattura 2026-118, Acme Srl, 3 x Widget a 40 euro. Quanto è il totale?
+3. Recensione: "Prodotto ok, consegna lenta". È soddisfatto?
+4. Ricevuta del bar: 2 caffè 2,40 euro. Estrai l'importo.
+
+Rispondi con una tabella: richiesta, strumento scelto, quanto sei sicuro da 0 a 100.`;
+const INTRO =
+  'Hai solo questi due strumenti. Per ogni richiesta dimmi quale useresti, basandoti soltanto sulla descrizione.';
+
+export const VAGUE_PROMPT = `${INTRO}
+- analyze_content: Analizza i contenuti per ricavarne informazioni
+- analyze_document: Analizza un documento per ricavarne informazioni
+
+${REQUESTS}`;
+
+export const CLEAR_PROMPT = `${INTRO}
+- analizza_sentiment: valuta il tono di un messaggio breve di un cliente. NON usarlo per estrarre dati da documenti.
+- estrai_dati_fattura: estrae fornitore, righe e totale da una fattura o ricevuta. NON usarlo per valutare il tono.
+
+${REQUESTS}`;
+
+export const REWRITE_PROMPT = `Riscrivi la descrizione di questo strumento includendo scopo, formato di input con un esempio, output, casi limite e quando usarlo invece di uno strumento simile:
+
+nome: search
+descrizione: Cerca elementi`;
+
 export const d2Descriptions: Exercise = {
   id: 'd2-1',
   code: 'D2·1',
   lesson: 'Progettare gli strumenti',
   title: 'Descrizioni vaghe contro descrizioni chiare',
-  place: 'Terminale (claude -p)',
+  place: 'Claude (app o claude.ai)',
   minutes: 8,
   goal: 'Misurare quanto la descrizione guida la scelta dello strumento.',
   observe: [
-    'Con le descrizioni vaghe la scelta è poco affidabile: in questa prova fattura e ricevuta non attivano nessuno strumento.',
-    'Con le descrizioni chiare ogni richiesta va allo strumento giusto.',
+    'Con le descrizioni vaghe Claude è poco sicuro: nella prova registrata da 60 a 75 su 100, e dice che sono quasi identiche.',
+    'Con le descrizioni chiare la sicurezza sale: nella prova registrata da 88 a 98.',
     'La descrizione riscritta dice anche quando NON usare lo strumento.',
   ],
   exam: 'La description è il criterio di selezione; strumenti sovrapposti causano errori di instradamento.',
@@ -18,64 +45,59 @@ export const d2Descriptions: Exercise = {
     {
       id: 'confronto',
       label: '1. Le stesse richieste',
-      simulator: 'terminal',
+      description:
+        'Due chat con le stesse quattro richieste. Cambia solo come sono descritti gli strumenti: a sinistra in modo vago, a destra in modo chiaro. Confrontate la colonna della sicurezza.',
+      simulator: 'chat',
       source: 'reale',
-      title: 'kit/claude-p · modello sonnet',
+      title: 'risposte registrate con claude -p · modello sonnet',
+      panes: ['Descrizioni vaghe', 'Descrizioni chiare'],
       steps: [
-        { kind: 'command', text: 'CLAUDE_MODEL=sonnet python strumenti_ambigui.py' },
-        { kind: 'divider', text: '===== DESCRIZIONI VAGHE' },
-        {
-          kind: 'output',
-          text: 'analyze_content   "Analizza i contenuti per ricavarne informazioni"\nanalyze_document  "Analizza un documento per ricavarne informazioni"',
-          tone: 'muted',
-          note: 'Domanda al team: voi quale scegliereste per una recensione?',
-        },
+        { kind: 'message', role: 'user', pane: 0, text: VAGUE_PROMPT },
         {
           kind: 'table',
-          columns: ['Richiesta', 'Strumento scelto'],
+          pane: 0,
+          columns: ['N.', 'Strumento scelto', 'Sicurezza'],
           rows: [
-            ['«Terzo ritardo in un mese…» Come si sente?', 'analyze_content'],
-            ['«Fattura 2026-118…» Quanto è il totale?', '(nessuno strumento: risposta testuale)'],
-            ['Recensione: è soddisfatto?', 'analyze_content'],
-            ['Ricevuta del bar: estrai l’importo', '(nessuno strumento: risposta testuale)'],
+            ['1', 'analyze_content', '60'],
+            ['2', 'analyze_document', '75'],
+            ['3', 'analyze_content', '60'],
+            ['4', 'analyze_document', '65'],
           ],
-          highlight: [1, 3],
-          observe: [0],
-          note: 'analyze_document non è mai stato scelto, nemmeno per la fattura. Un’altra prova può dare risultati diversi.',
         },
-        { kind: 'divider', text: '===== DESCRIZIONI CHIARE' },
         {
-          kind: 'output',
-          text: 'analizza_sentiment   tono di un messaggio breve… NON per documenti strutturati\nestrai_dati_fattura  dati di fattura o ricevuta… NON per il tono di un messaggio',
-          tone: 'muted',
+          kind: 'message',
+          role: 'assistant',
+          pane: 0,
+          text: '[…] le due descrizioni sono quasi identiche, quindi la scelta si basa solo sulla natura dell’input. […] "contenuti" è un termine generico che potrebbe includere anche i documenti. […]',
+          observe: [0],
+          note: 'Le scelte sono sensate, ma Claude si basa sulla richiesta: le descrizioni non lo aiutano.',
         },
+        { kind: 'message', role: 'user', pane: 1, text: CLEAR_PROMPT },
         {
           kind: 'table',
-          columns: ['Richiesta', 'Strumento scelto'],
+          pane: 1,
+          columns: ['N.', 'Strumento scelto', 'Sicurezza'],
           rows: [
-            ['«Terzo ritardo in un mese…» Come si sente?', 'analizza_sentiment'],
-            ['«Fattura 2026-118…» Quanto è il totale?', 'estrai_dati_fattura'],
-            ['Recensione: è soddisfatto?', 'analizza_sentiment'],
-            ['Ricevuta del bar: estrai l’importo', 'estrai_dati_fattura'],
+            ['1', 'analizza_sentiment', '98'],
+            ['2', 'estrai_dati_fattura', '93'],
+            ['3', 'analizza_sentiment', '88'],
+            ['4', 'estrai_dati_fattura', '95'],
           ],
           observe: [1],
+          note: 'La sicurezza è dichiarata dal modello: serve per confrontare, non è una misura calibrata.',
         },
       ],
     },
     {
       id: 'riscrittura',
       label: '2. Riscrivere la descrizione',
+      description:
+        'Una chat in cui si chiede a Claude di trasformare una descrizione di due parole in una completa. La tabella mostra i cinque elementi che mancavano.',
       simulator: 'chat',
       source: 'esempio',
       title: 'nuova chat',
       steps: [
-        {
-          kind: 'message',
-          role: 'user',
-          text: `Riscrivi la descrizione di questo strumento includendo scopo, formato di input con un esempio, output, casi limite e quando usarlo invece di uno strumento simile:
-
-{"name": "search", "description": "Cerca elementi"}`,
-        },
+        { kind: 'message', role: 'user', text: REWRITE_PROMPT },
         {
           kind: 'table',
           columns: ['Elemento', 'Nuova descrizione'],

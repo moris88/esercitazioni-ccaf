@@ -1,11 +1,11 @@
 import type { Exercise } from '../types';
 
-export const p3Shell: Exercise = {
-  id: 'p-3',
-  code: 'P·3',
+export const p4Shell: Exercise = {
+  id: 'p-4',
+  code: 'P·4',
   lesson: 'Pre-corso · Riga di comando',
   title: 'Flag, stdin, exit code, glob e permessi',
-  place: 'Integrazione dal pre-corso',
+  place: 'Claude (app o claude.ai)',
   minutes: 8,
   goal: 'Capire i meccanismi del terminale su cui si basano hook, pipeline e server MCP.',
   observe: [
@@ -20,6 +20,8 @@ export const p3Shell: Exercise = {
     {
       id: 'pipe',
       label: '1. Flag, pipe e redirect',
+      description:
+        'Nel terminale, un file viene passato a Claude e la risposta salvata in un altro file, tutto con una riga.',
       simulator: 'terminal',
       source: 'esempio',
       title: 'bash',
@@ -41,22 +43,24 @@ export const p3Shell: Exercise = {
     {
       id: 'exit',
       label: '2. stdin ed exit code',
+      description:
+        'Si prova a mano l’hook del kit con due richieste finte. Il numero alla fine dice se l’azione è permessa (0) o bloccata (2).',
       simulator: 'terminal',
       source: 'esempio',
       title: 'l’hook del kit, provato a mano',
       steps: [
         {
           kind: 'command',
-          text: 'echo \'{"tool_input":{"command":"npm test"}}\' | python blocca_comandi.py; echo $?',
+          text: 'echo \'{"tool_input":{"command":"ls ordini"}}\' | bash blocca.sh; echo $?',
         },
         { kind: 'output', text: '0', tone: 'info', note: 'Nessun messaggio, codice 0: nessuna obiezione.' },
         {
           kind: 'command',
-          text: 'echo \'{"tool_input":{"command":"rm -rf dist"}}\' | python blocca_comandi.py; echo $?',
+          text: 'echo \'{"tool_input":{"command":"rm -r bozze"}}\' | bash blocca.sh; echo $?',
         },
         {
           kind: 'output',
-          text: "Bloccato dall'hook: cancellazione ricorsiva forzata (rm -rf). Comando: rm -rf dist",
+          text: "Bloccato dall'hook: cancellare file non è permesso.",
           tone: 'error',
         },
         {
@@ -71,6 +75,8 @@ export const p3Shell: Exercise = {
     {
       id: 'env',
       label: '3. Variabili d’ambiente',
+      description:
+        'Due modi di scrivere un token segreto nella configurazione: a sinistra in chiaro, a destra con un riferimento che non lo rivela.',
       simulator: 'terminal',
       source: 'esempio',
       title: '.mcp.json a confronto',
@@ -97,12 +103,14 @@ export const p3Shell: Exercise = {
     {
       id: 'glob',
       label: '4. Glob e regex',
+      description:
+        'In alto un modello che trova file per nome, sotto un modello che riconosce un testo. La tabella mostra che cosa corrisponde.',
       simulator: 'terminal',
       source: 'esempio',
-      title: 'repo-prova',
+      title: 'cartella-prova',
       steps: [
-        { kind: 'output', text: 'glob  src/**/*.test.tsx', tone: 'info' },
-        { kind: 'output', text: 'src/components/Header.test.tsx' },
+        { kind: 'output', text: 'glob  procedure/*.md', tone: 'info' },
+        { kind: 'output', text: 'Archivio-listino-2023.md  garanzie.md  rimborsi.md  spedizioni.md' },
         { kind: 'output', text: 'regex  FATT-\\d{4}-\\d{6}', tone: 'info' },
         {
           kind: 'table',
@@ -120,6 +128,8 @@ export const p3Shell: Exercise = {
     {
       id: 'permessi',
       label: '5. Permessi',
+      description:
+        'In alto le regole dei permessi: consenti, chiedi, nega. Sotto, tre azioni di Claude trattate in tre modi diversi.',
       simulator: 'code',
       source: 'esempio',
       title: 'settings.json del progetto',

@@ -1,5 +1,4 @@
 import type { Exercise } from '../types';
-import { d0Basics } from './d0Basics';
 import { d1Hook } from './d1Hook';
 import { d1Loop } from './d1Loop';
 import { d1Sessions } from './d1Sessions';
@@ -16,24 +15,25 @@ import { d4Review } from './d4Review';
 import { d5Context } from './d5Context';
 import { d5Escalation } from './d5Escalation';
 import { d5Sources } from './d5Sources';
-import { p1Formats } from './p1Formats';
-import { p2Network } from './p2Network';
-import { p3Shell } from './p3Shell';
-import { p4Development } from './p4Development';
-import { p5Data } from './p5Data';
-import { p6Ai } from './p6Ai';
-import { p7Architecture } from './p7Architecture';
+import { p1Basics } from './p1Basics';
+import { p2Formats } from './p2Formats';
+import { p3Network } from './p3Network';
+import { p4Shell } from './p4Shell';
+import { p5Development } from './p5Development';
+import { p6Data } from './p6Data';
+import { p7Ai } from './p7Ai';
+import { p8Architecture } from './p8Architecture';
 
 /** In ordine di programma */
 export const exercises: Exercise[] = [
-  d0Basics,
-  p1Formats,
-  p2Network,
-  p3Shell,
-  p4Development,
-  p5Data,
-  p6Ai,
-  p7Architecture,
+  p1Basics,
+  p2Formats,
+  p3Network,
+  p4Shell,
+  p5Development,
+  p6Data,
+  p7Ai,
+  p8Architecture,
   d1Loop,
   d1Subagents,
   d1Hook,

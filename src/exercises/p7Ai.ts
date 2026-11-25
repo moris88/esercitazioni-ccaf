@@ -14,12 +14,12 @@ const rag: Diagram = {
   ],
 };
 
-export const p6Ai: Exercise = {
-  id: 'p-6',
-  code: 'P·6',
+export const p7Ai: Exercise = {
+  id: 'p-7',
+  code: 'P·7',
   lesson: 'Pre-corso · Documenti e IA',
   title: 'OCR, token, allucinazioni, RAG e few-shot',
-  place: 'Integrazione dal pre-corso',
+  place: 'Claude (app o claude.ai)',
   minutes: 10,
   goal: 'Capire da dove nascono gli errori quando un modello lavora su documenti e conversazioni lunghe.',
   observe: [
@@ -34,6 +34,8 @@ export const p6Ai: Exercise = {
     {
       id: 'ocr',
       label: '1. OCR',
+      description:
+        'Una fattura letta da una scansione, con lettere al posto dei numeri. La tabella mostra i controlli che intercettano l’errore.',
       simulator: 'terminal',
       source: 'esempio',
       title: 'fattura scansionata',
@@ -55,6 +57,8 @@ export const p6Ai: Exercise = {
     {
       id: 'token',
       label: '2. Token e contesto',
+      description:
+        'La barra indica quanto spazio della conversazione è occupato. Cresce a ogni giro e scende dopo la compattazione.',
       simulator: 'code',
       source: 'esempio',
       title: 'conversazione che cresce',
@@ -79,6 +83,8 @@ export const p6Ai: Exercise = {
     {
       id: 'allucinazioni',
       label: '3. Allucinazioni',
+      description:
+        'La stessa fattura con due richieste diverse. A sinistra Claude è spinto a rispondere e inventa, a destra può dire che il dato manca.',
       simulator: 'chat',
       source: 'esempio',
       title: 'stessa fattura, due prompt',
@@ -111,6 +117,8 @@ export const p6Ai: Exercise = {
     {
       id: 'rag',
       label: '4. RAG',
+      description:
+        'Claude risponde usando pagine recuperate da un manuale. La prima volta la pagina è giusta, la seconda no.',
       simulator: 'terminal',
       source: 'esempio',
       title: 'domande sul manuale aziendale',
@@ -149,6 +157,8 @@ export const p6Ai: Exercise = {
     {
       id: 'few-shot',
       label: '5. Few-shot',
+      description:
+        'Un messaggio con tre esempi già risolti, poi un’email nuova. Claude segue lo schema degli esempi.',
       simulator: 'chat',
       source: 'esempio',
       title: 'nuova chat',

@@ -1,0 +1,114 @@
+<section class="page">
+  <p class="kicker">Corso CCA-F · Setup</p>
+  <h1>Guida al setup: Claude, Claude Code e il kit</h1>
+  <p>Da seguire in ordine. Alla fine avrete l’app di Claude, Claude Code e le cartelle delle esercitazioni pronte sul vostro computer. <b>Non serve saper programmare.</b></p>
+  <table>
+    <tr><th>Strumento</th><th>Che cos’è</th><th>Serve per</th></tr>
+    <tr><td>Chat di Claude</td><td>L’app desktop oppure il sito claude.ai, dal browser</td><td>P·1–P·8, D2·1, D2·2, D4·1, D4·2, D5·2, D5·3</td></tr>
+    <tr><td>Claude Code</td><td>Claude nel terminale: legge e modifica i file di una cartella, chiedendo il permesso</td><td>D1·1–D1·4, D2·3, D3·1–D3·3, D4·3, D5·1</td></tr>
+    <tr><td>cartella-prova</td><td>Documenti inventati di un negozio online</td><td>Le esercitazioni con Claude Code</td></tr>
+    <tr><td>kit</td><td>File pronti da allegare o da far copiare a Claude</td><td>Le esercitazioni che lo indicano</td></tr>
+  </table>
+  <h2>L’account</h2>
+  <ul>
+    <li>Ognuno usa il proprio account Claude: l’accesso si fa una volta nell’app e una volta in Claude Code.</li>
+    <li>Claude Code richiede un piano Pro, Max, Team o Enterprise, oppure un account Console. La chat funziona con tutti i piani.</li>
+    <li>Le esercitazioni consumano un po’ del vostro piano.</li>
+  </ul>
+  <p class="note">Comandi e schermate possono cambiare. Se qualcosa non corrisponde, fa fede code.claude.com/docs (Claude Code) e support.claude.com (app).</p>
+</section>
+<section class="page">
+  <p class="kicker">1 · La chat</p>
+  <h1>Installare e usare la chat</h1>
+  <h2>Installare l’app</h2>
+  <ol>
+    <li>Aprite claude.ai/download e scegliete Windows o macOS.</li>
+    <li>Aprite il file scaricato e completate l’installazione.</li>
+    <li>Avviate Claude e fate l’accesso.</li>
+  </ol>
+  <p>Non volete installare nulla? La stessa chat è su <b>claude.ai</b>, dal browser.</p>
+  <h2>Le mosse di base</h2>
+  <ul>
+    <li><b>Una chat nuova per ogni esercitazione:</b> la conversazione precedente non deve influenzare la risposta.</li>
+    <li><b>Allegare un file</b> con il pulsante +, oppure incollarne il testo.</li>
+    <li><b>Copiare i riquadri grigi</b> della guida così come sono e inviarli.</li>
+    <li><b>Riprovare:</b> la risposta può cambiare da una prova all’altra. È normale.</li>
+  </ul>
+</section>
+<section class="page">
+  <p class="kicker">2 · Claude Code</p>
+  <h1>Installare Claude Code</h1>
+  <p>Il <b>terminale</b> è una finestra in cui si scrivono comandi. Su Windows si chiama PowerShell, su Mac Terminale: cercatelo nel menu delle applicazioni.</p>
+  <h2>Windows</h2>
+  <ol>
+    <li>Installate Git for Windows da git-scm.com, lasciando le scelte proposte. Serve per l’hook di D1·3; non dovrete usarlo direttamente.</li>
+    <li>Aprite PowerShell, incollate questa riga e premete Invio:</li>
+  </ol>
+  <pre>irm https://claude.ai/install.ps1 | iex</pre>
+  <h2>macOS</h2>
+  <pre>curl -fsSL https://claude.ai/install.sh | bash</pre>
+  <h2>Controllare</h2>
+  <p>Chiudete e riaprite il terminale, poi scrivete:</p>
+  <pre>claude --version</pre>
+  <p>Se compare un numero, è installato.</p>
+</section>
+<section class="page">
+  <p class="kicker">2 · Claude Code</p>
+  <h1>Preparare le cartelle e avviare</h1>
+  <ol>
+    <li>Copiate <b>cartella-prova</b> e <b>kit</b> sul Desktop, dentro una cartella <b>corso</b>, una accanto all’altra.</li>
+    <li>Aprite il terminale nella cartella-prova. Windows: aprite la cartella, clic destro in un punto vuoto, «Apri nel terminale». Mac: scrivete <b>cd</b> seguito da uno spazio, trascinate la cartella nel Terminale e premete Invio.</li>
+    <li>Avviate Claude Code:</li>
+  </ol>
+  <pre>claude</pre>
+  <ol start="4">
+    <li>Al primo avvio si apre il browser: fate l’accesso e tornate al terminale.</li>
+    <li>Claude chiede se vi fidate della cartella: rispondete sì.</li>
+  </ol>
+  <pre>corso/
+  cartella-prova/   qui si avvia claude
+    procedure/  ordini/  spedizioni/  risposte/  bozze/  riservato/
+  kit/
+    dati/           file da allegare in chat
+    claude-code/    hook, regola, skill e subagente: li copia Claude</pre>
+  <p class="note">Usate sempre una copia. Se qualcosa si rovina, cancellate la vostra cartella-prova e ricopiate l’originale. Mai fare le esercitazioni in una cartella di lavoro.</p>
+</section>
+<section class="page">
+  <p class="kicker">2 · Claude Code</p>
+  <h1>Usare Claude Code</h1>
+  <p>Si scrive in italiano, come in chat. Prima di modificare un file o eseguire un comando Claude chiede il permesso: leggete che cosa vuole fare e poi rispondete.</p>
+  <table>
+    <tr><th>Tasto o comando</th><th>Effetto</th></tr>
+    <tr><td>Esc</td><td>Ferma Claude</td></tr>
+    <tr><td>Shift+Tab</td><td>Cambia modalità: normale, accetta modifiche, plan</td></tr>
+    <tr><td>Ctrl+O</td><td>Mostra il dettaglio degli strumenti usati</td></tr>
+    <tr><td>/clear</td><td>Conversazione nuova</td></tr>
+    <tr><td>/exit</td><td>Esce da Claude Code</td></tr>
+    <tr><td>/init · /memory</td><td>Crea CLAUDE.md · mostra le istruzioni caricate (D3·1)</td></tr>
+    <tr><td>/hooks</td><td>Mostra gli hook (D1·3)</td></tr>
+    <tr><td>/mcp</td><td>Stato dei server MCP (D2·3)</td></tr>
+    <tr><td>/context · /compact</td><td>Contesto occupato · riassume la conversazione (D5·1)</td></tr>
+    <tr><td>/status · /help</td><td>Versione e account · elenco dei comandi</td></tr>
+  </table>
+</section>
+<section class="page">
+  <p class="kicker">3 · Prima della lezione</p>
+  <h1>Problemi comuni e checklist</h1>
+  <table>
+    <tr><th>Sintomo</th><th>Che cosa fare</th></tr>
+    <tr><td>claude non è riconosciuto</td><td>Chiudere e riaprire il terminale, poi provare claude doctor</td></tr>
+    <tr><td>Il login non va a buon fine</td><td>Verificare il piano: quello gratuito non include Claude Code</td></tr>
+    <tr><td>L’hook non blocca nulla</td><td>Controllare /hooks e riavviare claude. Su Windows verificare che Git for Windows sia installato</td></tr>
+    <tr><td>Skill o subagente non compaiono</td><td>Verificare di aver avviato claude in cartella-prova, poi /exit e riavviare</td></tr>
+    <tr><td>Claude non trova ../kit</td><td>kit e cartella-prova devono stare una accanto all’altra</td></tr>
+    <tr><td>Il server MCP non si collega</td><td>Controllare la connessione e aprire /mcp. Se non risponde, seguire D2·3 nel simulatore</td></tr>
+  </table>
+  <h2>Checklist</h2>
+  <ul class="check">
+    <li>App di Claude installata, oppure claude.ai aperto, con accesso fatto</li>
+    <li>claude --version risponde</li>
+    <li>Accesso fatto in Claude Code</li>
+    <li>cartella-prova e kit una accanto all’altra</li>
+    <li>Su Windows: Git for Windows installato</li>
+  </ul>
+</section>

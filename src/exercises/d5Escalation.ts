@@ -33,6 +33,8 @@ export const d5Escalation: Exercise = {
     {
       id: 'policy',
       label: '1. La policy',
+      description:
+        'Il primo messaggio della chat: stabilisce come deve comportarsi l’assistente e quando passare la mano.',
       simulator: 'chat',
       source: 'esempio',
       title: 'nuova chat',
@@ -57,6 +59,8 @@ Rispondi ai prossimi messaggi come se fossero del cliente. Clienti in archivio: 
     {
       id: 'caso-1',
       label: '2. Tono acceso',
+      description:
+        'Un cliente molto arrabbiato con un problema semplice. Guardate se l’assistente risolve o passa la mano.',
       simulator: 'chat',
       source: 'esempio',
       title: 'caso 1',
@@ -81,6 +85,8 @@ Rispondi ai prossimi messaggi come se fossero del cliente. Clienti in archivio: 
     {
       id: 'caso-2',
       label: '3. Fuori policy',
+      description:
+        'Un cliente cortese con una richiesta che le regole non coprono. L’assistente passa la mano con un riepilogo.',
       simulator: 'chat',
       source: 'esempio',
       title: 'caso 2',
@@ -116,6 +122,8 @@ Rispondi ai prossimi messaggi come se fossero del cliente. Clienti in archivio: 
     {
       id: 'caso-3',
       label: '4. Stesso nome',
+      description:
+        'Un cliente il cui nome corrisponde a due persone in archivio. L’assistente chiede un dato in più.',
       simulator: 'chat',
       source: 'esempio',
       title: 'caso 3',

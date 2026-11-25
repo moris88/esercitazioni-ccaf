@@ -1,4 +1,4 @@
-import type { Diagram, Exercise, Scene, Step } from '../types';
+import type { Diagram, Exercise } from '../types';
 
 const diagram: Diagram = {
   nodes: [
@@ -15,98 +15,116 @@ const diagram: Diagram = {
   ],
 };
 
-/** Nella registrazione lo strumento è stato chiamato tre volte */
-const EMPTY_RESULTS = Array(3).fill('lo strumento ha restituito: is_error=False  {"results": []}').join('\n');
+export const EMPTY_RESULT = '{"results": []}';
+export const ERROR_RESULT =
+  '{"isError": true, "errorCategory": "transient", "isRetryable": true, "description": "Timeout del motore di ricerca dopo 30 secondi"}';
 
-function buildScene(id: string, label: string, steps: Step[]): Scene {
-  return {
-    id,
-    label,
-    simulator: 'terminal',
-    source: 'reale',
-    title: 'kit/claude-p · modello sonnet',
-    diagram,
-    steps: [
-      { kind: 'command', text: 'CLAUDE_MODEL=sonnet python vuoto_o_errore.py' },
-      {
-        kind: 'output',
-        text: 'Domanda: Qual è la politica di reso per i dispositivi elettronici sopra i 500 euro?',
-        path: ['claude'],
-      },
-      { kind: 'divider', text: `===== Modalità: ${id}` },
-      ...steps,
-    ],
-  };
+/** Stessa domanda: cambia solo ciò che lo strumento ha restituito */
+export function buildErrorPrompt(result: string): string {
+  return `Sei l'assistente del servizio clienti. Un cliente chiede: "Qual è la politica di reso per i dispositivi sopra i 500 euro?" Hai cercato nella knowledge base e lo strumento ti ha restituito:
+
+${result}
+
+Scrivi la risposta al cliente, in massimo 3 frasi.`;
 }
+
+const EMPTY_ANSWER =
+  'Grazie per la domanda. Al momento non trovo informazioni specifiche sulla politica di reso per i dispositivi sopra i 500 euro, quindi preferisco non darle indicazioni che potrebbero non essere corrette. Posso inoltrare la richiesta a un collega del nostro team […]';
+const TITLE = 'risposta registrata con claude -p · modello sonnet';
 
 export const d2Errors: Exercise = {
   id: 'd2-2',
   code: 'D2·2',
   lesson: 'Errori degli strumenti',
   title: 'Vuoto, errore o soppressione silenziosa',
-  place: 'Terminale (claude -p)',
+  place: 'Claude (app o claude.ai)',
   minutes: 7,
   goal: 'Vedere come cambia la risposta di Claude se lo strumento restituisce un risultato vuoto, un errore strutturato o un guasto nascosto.',
   observe: [
     'Con l’errore strutturato Claude dice che non è riuscito a cercare e propone di riprovare.',
-    'Con la soppressione Claude crede che la ricerca sia riuscita: dice che non ha trovato nulla, senza segnalare il guasto.',
+    'Con la soppressione Claude crede che la ricerca sia riuscita: non segnala il guasto.',
     'Claude non può distinguere ciò che lo strumento non gli dice.',
   ],
   exam: '[] con 200 = informazione; timeout = errore; mai soppressione silenziosa.',
   scenes: [
-    buildScene('vuoto', '1. Vuoto', [
-      {
-        kind: 'output',
-        text: EMPTY_RESULTS,
-        tone: 'info',
-        path: ['claude', 'tool', 'kb'],
-        note: 'La ricerca è riuscita, senza risultati. Claude ha riprovato con altre parole: tre chiamate.',
-      },
-      {
-        kind: 'output',
-        text: 'risposta di Claude:\nNon ho trovato nella knowledge base nessuna informazione sulla politica di reso per i dispositivi elettronici sopra i 500 euro. Non voglio darti indicazioni inventate. […]',
-        path: ['tool', 'claude', 'answer'],
-        note: 'Affermazione corretta: il risultato vuoto è un’informazione.',
-      },
-    ]),
-    buildScene('errore', '2. Errore strutturato', [
-      {
-        kind: 'output',
-        text: 'lo strumento ha restituito: is_error=True\n{"errorCategory": "transient", "isRetryable": true, "description": "Timeout del motore di ricerca dopo 30 secondi", "attempted_query": "politica di reso dispositivi elettronici sopra 500 euro"}',
-        tone: 'error',
-        path: ['claude', 'tool', 'kb'],
-      },
-      {
-        kind: 'output',
-        text: '(altre due chiamate con lo stesso errore; nell’ultima la query è "reso elettronica")',
-        tone: 'muted',
-        path: ['tool', 'claude', 'tool'],
-        note: 'isRetryable: true gli dice che riprovare ha senso, e lo fa.',
-      },
-      {
-        kind: 'output',
-        text: 'risposta di Claude:\nAl momento non riesco a consultare la knowledge base: la ricerca è andata in timeout per tre volte di seguito, anche con una query più semplice. Per questo non posso dirti con certezza qual è la politica di reso […] Se vuoi, riprovo io adesso.',
-        path: ['claude', 'answer'],
-        observe: [0],
-        note: 'Sa che non ha cercato davvero, quindi non afferma nulla sulla politica.',
-      },
-    ]),
-    buildScene('soppressione', '3. Soppressione', [
-      {
-        kind: 'output',
-        text: EMPTY_RESULTS,
-        tone: 'info',
-        path: ['claude', 'tool', 'kb'],
-        observe: [2],
-        note: 'Qui il servizio è giù, ma lo strumento non lo dice: output identico alla scena 1.',
-      },
-      {
-        kind: 'output',
-        text: 'risposta di Claude:\nNon ho trovato nella knowledge base nessun articolo sulla politica di reso, né per i dispositivi elettronici sopra i 500 euro né in generale. Preferisco non darti informazioni inventate. […]',
-        path: ['tool', 'claude', 'answer'],
-        observe: [1],
-        note: 'In questa prova il tono è prudente, ma non segnala il guasto: il cliente crede che la ricerca sia riuscita.',
-      },
-    ]),
+    {
+      id: 'vuoto',
+      label: '1. Vuoto',
+      description:
+        'In chat si incolla ciò che lo strumento avrebbe restituito. Qui la ricerca è riuscita ma non ha trovato nulla: la lista vuota è un’informazione vera.',
+      simulator: 'chat',
+      source: 'reale',
+      title: TITLE,
+      diagram,
+      steps: [
+        {
+          kind: 'message',
+          role: 'user',
+          text: buildErrorPrompt(EMPTY_RESULT),
+          path: ['claude', 'tool', 'kb'],
+        },
+        {
+          kind: 'message',
+          role: 'assistant',
+          text: EMPTY_ANSWER,
+          path: ['tool', 'claude', 'answer'],
+          note: 'Affermazione corretta: il risultato vuoto è un’informazione.',
+        },
+      ],
+    },
+    {
+      id: 'errore',
+      label: '2. Errore strutturato',
+      description:
+        'Stessa domanda, ma lo strumento dichiara il guasto: dice che c’è stato un timeout e che riprovare ha senso. La risposta al cliente cambia.',
+      simulator: 'chat',
+      source: 'reale',
+      title: TITLE,
+      diagram,
+      steps: [
+        {
+          kind: 'message',
+          role: 'user',
+          text: buildErrorPrompt(ERROR_RESULT),
+          path: ['claude', 'tool', 'kb'],
+        },
+        {
+          kind: 'message',
+          role: 'assistant',
+          text: 'Mi dispiace, in questo momento non riesco a consultare le informazioni sulla politica di reso […] a causa di un problema tecnico temporaneo. […] può riprovare tra qualche minuto, oppure posso riprendere la ricerca non appena il sistema risponde. […]',
+          path: ['tool', 'claude', 'answer'],
+          observe: [0],
+          note: 'Sa che non ha cercato davvero, quindi non afferma nulla sulla politica.',
+        },
+      ],
+    },
+    {
+      id: 'soppressione',
+      label: '3. Soppressione',
+      description:
+        'Il servizio è guasto, ma lo strumento lo nasconde e restituisce una lista vuota. Il messaggio è identico alla scena 1, quindi Claude non può accorgersene.',
+      simulator: 'chat',
+      source: 'reale',
+      title: `${TITLE} (la stessa della scena 1)`,
+      diagram,
+      steps: [
+        {
+          kind: 'message',
+          role: 'user',
+          text: buildErrorPrompt(EMPTY_RESULT),
+          path: ['claude', 'tool', 'kb'],
+          observe: [2],
+          note: 'Testo identico alla scena 1: la differenza esiste solo fuori dalla chat.',
+        },
+        {
+          kind: 'message',
+          role: 'assistant',
+          text: EMPTY_ANSWER,
+          path: ['tool', 'claude', 'answer'],
+          observe: [1],
+          note: 'Il tono è prudente, ma il cliente crede che la ricerca sia riuscita.',
+        },
+      ],
+    },
   ],
 };

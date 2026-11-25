@@ -1,8 +1,8 @@
 import type { Exercise } from '../types';
 
-export const d0Basics: Exercise = {
-  id: '0',
-  code: '0',
+export const p1Basics: Exercise = {
+  id: 'p-1',
+  code: 'P·1',
   lesson: 'Pre-corso · Prerequisiti tecnici',
   title: 'JSON, schema e regex con Claude',
   place: 'Claude (app o claude.ai)',
@@ -18,6 +18,8 @@ export const d0Basics: Exercise = {
     {
       id: 'json',
       label: '1. JSON non valido',
+      description:
+        'Una chat con Claude. Chi scrive incolla un testo in formato JSON con tre errori; la tabella indica dove sono, senza correggerli.',
       simulator: 'chat',
       source: 'esempio',
       title: 'nuova chat',
@@ -50,6 +52,8 @@ export const d0Basics: Exercise = {
     {
       id: 'schema',
       label: '2. JSON Schema',
+      description:
+        'Si chiede a Claude uno schema, cioè l’elenco delle regole che un ordine deve rispettare. Il riquadro della risposta dice quali campi servono e di che tipo.',
       simulator: 'chat',
       source: 'esempio',
       title: 'stessa chat',
@@ -82,6 +86,8 @@ export const d0Basics: Exercise = {
     {
       id: 'regex',
       label: '3. Regex e limite',
+      description:
+        'Claude scrive una regex, cioè un modello che riconosce le date. Poi spiega perché accetta anche una data che non esiste.',
       simulator: 'chat',
       source: 'esempio',
       title: 'stessa chat',

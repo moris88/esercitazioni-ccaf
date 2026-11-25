@@ -26,9 +26,11 @@ export const d5Context: Exercise = {
     {
       id: 'lettura',
       label: '1. Lettura diretta o Explore',
+      description:
+        'La barra mostra quanto contesto è occupato. A sinistra Claude legge tutti i documenti, a destra li fa leggere a un subagente.',
       simulator: 'code',
       source: 'esempio',
-      title: 'progetto con molti componenti',
+      title: 'cartella con molti documenti',
       panes: ['Lettura diretta', 'Subagente Explore'],
       steps: [
         { kind: 'meter', label: '/context', percent: 12, pane: 0 },
@@ -36,7 +38,7 @@ export const d5Context: Exercise = {
           kind: 'message',
           role: 'user',
           pane: 0,
-          text: 'Leggi tutti i file in src/components e riassumi cosa fanno.',
+          text: 'Leggi tutti i file in procedure e riassumi cosa fanno.',
         },
         {
           kind: 'tool',
@@ -58,7 +60,7 @@ export const d5Context: Exercise = {
           kind: 'message',
           role: 'user',
           pane: 1,
-          text: 'Usa un subagente Explore per riassumere cosa fanno i file in src/components: voglio solo il riepilogo.',
+          text: 'Usa un subagente Explore per riassumere cosa fanno i file in procedure: voglio solo il riepilogo.',
         },
         {
           kind: 'tool',
@@ -81,6 +83,8 @@ export const d5Context: Exercise = {
     {
       id: 'compact',
       label: '2. Compattare',
+      description:
+        'Lo stesso caso riassunto in due modi. A sinistra gli importi si perdono, a destra si è chiesto di conservarli.',
       simulator: 'code',
       source: 'esempio',
       title: 'stesso caso, due compattazioni',

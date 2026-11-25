@@ -14,12 +14,12 @@ const pipeline: Diagram = {
   ],
 };
 
-export const p4Development: Exercise = {
-  id: 'p-4',
-  code: 'P·4',
+export const p5Development: Exercise = {
+  id: 'p-5',
+  code: 'P·5',
   lesson: 'Pre-corso · Sviluppo software',
   title: 'Git, CI/CD, funzioni e regole garantite',
-  place: 'Integrazione dal pre-corso',
+  place: 'Claude (app o claude.ai)',
   minutes: 10,
   goal: 'Seguire una modifica dal branch alla pipeline e distinguere ciò che il codice garantisce da ciò che il modello interpreta.',
   observe: [
@@ -33,6 +33,8 @@ export const p4Development: Exercise = {
     {
       id: 'git',
       label: '1. Git',
+      description:
+        'Una modifica salvata con Git, passo per passo. La tabella dice quali file si condividono con il team e quali restano personali.',
       simulator: 'terminal',
       source: 'esempio',
       title: 'ciclo di lavoro',
@@ -64,6 +66,8 @@ export const p4Development: Exercise = {
     {
       id: 'pipeline',
       label: '2. Pipeline',
+      description:
+        'Una catena di controlli automatici. Al primo errore si ferma; dopo la correzione arriva fino alla revisione di Claude.',
       simulator: 'terminal',
       source: 'esempio',
       title: 'GitHub Actions',
@@ -93,23 +97,25 @@ export const p4Development: Exercise = {
     {
       id: 'funzione',
       label: '3. Dalla funzione al tool',
+      description:
+        'In alto la scheda di una funzione, sotto come ogni sua parte diventa un pezzo della descrizione di uno strumento per Claude.',
       simulator: 'terminal',
       source: 'esempio',
       title: 'cerca_ordine',
       steps: [
         {
           kind: 'output',
-          text: 'def cerca_ordine(ordine_id: str) -> dict:\n    """Restituisce lo stato di un ordine dato il suo identificativo."""\n    …\n    raise ValueError("Ordine non trovato")',
+          text: 'Funzione cerca_ordine\n  Che cosa fa: restituisce lo stato di un ordine\n  Riceve: identificativo dell’ordine (testo)\n  Restituisce: stato dell’ordine\n  Se l’ordine non esiste: errore «Ordine non trovato»',
         },
         {
           kind: 'table',
           columns: ['Nella funzione', 'Nel tool'],
           rows: [
             ['nome', 'name'],
-            ['docstring', 'description'],
-            ['parametri e tipi', 'input_schema'],
-            ['valore di ritorno', 'contenuto del tool_result'],
-            ['eccezione', 'tool_result con is_error: true'],
+            ['che cosa fa', 'description'],
+            ['che cosa riceve', 'input_schema'],
+            ['che cosa restituisce', 'contenuto del tool_result'],
+            ['errore', 'tool_result con is_error: true'],
           ],
         },
         {
@@ -124,6 +130,8 @@ export const p4Development: Exercise = {
     {
       id: 'deterministico',
       label: '4. Deterministico o probabilistico',
+      description:
+        'Quattro regole da sistemare: alcune vanno garantite dal codice, altre possono essere interpretate dal modello.',
       simulator: 'terminal',
       source: 'esempio',
       title: 'dove mettere la regola?',

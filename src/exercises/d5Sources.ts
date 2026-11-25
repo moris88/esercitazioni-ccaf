@@ -19,6 +19,8 @@ export const d5Sources: Exercise = {
     {
       id: 'fonti',
       label: '1. Le fonti',
+      description:
+        'Le tre fonti dell’esercizio: due danno cifre diverse per gli stessi ricavi, la terza riporta un’indiscrezione.',
       simulator: 'chat',
       source: 'kit',
       title: 'fonti_conflitto.txt',
@@ -38,6 +40,8 @@ export const d5Sources: Exercise = {
     {
       id: 'libera',
       label: '2. Sintesi libera',
+      description:
+        'Una richiesta generica di riassunto. La risposta è scorrevole, ma del disaccordo tra le fonti non resta traccia.',
       simulator: 'chat',
       source: 'esempio',
       title: 'nuova chat',
@@ -60,6 +64,8 @@ export const d5Sources: Exercise = {
     {
       id: 'provenienza',
       label: '3. Con provenienza',
+      description:
+        'La richiesta ora pretende fonte, data e confidenza. Nei riquadri si vedono entrambi i valori e quale fa fede.',
       simulator: 'chat',
       source: 'esempio',
       title: 'stessa chat',

@@ -3,7 +3,7 @@
 App React da proiettare a lezione: anima le esercitazioni nel terminale, in chat e in Claude Code.
 È tutto simulato: non chiama Claude, non esegue comandi e funziona senza rete dopo l'installazione.
 
-Contiene le 17 esercitazioni della guida e 7 schede aggiuntive (P·1-P·7), una per area del pre-corso.
+Contiene 24 esercitazioni: P·1-P·8 (pre-corso) e D1·1-D5·3 (domini). Sopra ogni scena, «Cosa vediamo» spiega che cosa si vede a schermo.
 
 ## Avvio
 
@@ -34,3 +34,8 @@ Ogni scena dichiara `source`: `reale` (output registrato), `esempio` (scritto pe
 ## Verifiche
 
 `npm run lint`, `npm test`, `npm run build`
+
+## Generare i PDF
+
+`npm run pdf` ricrea `Esercitazioni_pratiche.pdf` e `Guida_setup_e_avvio.pdf` nella cartella superiore (serve Microsoft Edge).
+I passi per chi si esercita da solo sono in `guide/practice*.ts`; il resto arriva da `src/exercises/`.
