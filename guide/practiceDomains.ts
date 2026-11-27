@@ -4,14 +4,14 @@ import { MCP_COMMAND } from '../src/exercises/d2Mcp';
 import { COUNT_COMMAND, REVIEW_COMMAND } from '../src/exercises/d3Pipeline';
 import { INVOICE_PROMPT } from '../src/exercises/d4Invoice';
 import { DISCOUNT_RULES } from '../src/exercises/d4Review';
-import { CHAT, CODE, FOLDER, type Practice } from './practice';
+import { CHAT, CODE, FOLDER, NO_FILES, type Practice } from './practice';
 
 const RULE =
   "Regola del team: la procedura sui rimborsi la modifica solo l'ufficio legale, quindi non va toccata.";
 
 export const domainPractice: Record<string, Practice> = {
   'd1-1': {
-    needs: [FOLDER, CODE],
+    needs: [FOLDER, CODE, 'Da cartella-prova: ordini/A-101.txt e spedizioni/A-101.txt'],
     steps: [
       {
         text: 'Fate una domanda che richiede più letture.',
@@ -29,7 +29,7 @@ export const domainPractice: Record<string, Practice> = {
     ],
   },
   'd1-2': {
-    needs: [FOLDER, CODE],
+    needs: [FOLDER, CODE, 'Da cartella-prova: i file della cartella procedure'],
     steps: [
       {
         text: 'Chiedete due ricerche indipendenti in parallelo.',
@@ -47,7 +47,12 @@ export const domainPractice: Record<string, Practice> = {
     ],
   },
   'd1-3': {
-    needs: [FOLDER, CODE, 'Su Windows: Git for Windows (serve a far partire l’hook)'],
+    needs: [
+      FOLDER,
+      CODE,
+      'Su Windows: Git for Windows (serve a far partire l’hook)',
+      'Dal kit: kit/claude-code/hooks/blocca.sh e kit/claude-code/settings.hook.json; da cartella-prova: bozze, riservato/codici.txt, ordini/A-102.txt',
+    ],
     steps: [
       {
         text: 'Fate installare l’hook a Claude e approvate le richieste di permesso.',
@@ -66,7 +71,7 @@ export const domainPractice: Record<string, Practice> = {
     ],
   },
   'd1-4': {
-    needs: [FOLDER, CODE],
+    needs: [FOLDER, CODE, 'Da cartella-prova: procedure/rimborsi.md'],
     steps: [
       {
         text: 'Fate spiegare una procedura.',
@@ -91,7 +96,7 @@ export const domainPractice: Record<string, Practice> = {
     ],
   },
   'd2-1': {
-    needs: ['Tre chat nuove con Claude'],
+    needs: ['Tre chat nuove con Claude', NO_FILES],
     steps: [
       { text: 'Chat 1, descrizioni vaghe.', prompt: VAGUE_PROMPT },
       { text: 'Chat 2, descrizioni chiare. Confrontate la sicurezza dichiarata.', prompt: CLEAR_PROMPT },
@@ -99,7 +104,7 @@ export const domainPractice: Record<string, Practice> = {
     ],
   },
   'd2-2': {
-    needs: ['Due chat nuove con Claude'],
+    needs: ['Due chat nuove con Claude', NO_FILES],
     steps: [
       {
         text: 'Chat 1, lista vuota: la ricerca è riuscita e non c’è nulla.',
@@ -112,7 +117,11 @@ export const domainPractice: Record<string, Practice> = {
     ],
   },
   'd2-3': {
-    needs: [FOLDER, 'Terminale in cartella-prova, connessione a Internet'],
+    needs: [
+      FOLDER,
+      'Terminale in cartella-prova, connessione a Internet',
+      'Da cartella-prova: i file della cartella procedure',
+    ],
     steps: [
       { text: 'Nel terminale, fuori da Claude Code, aggiungete il server della guida.', prompt: MCP_COMMAND },
       { text: 'Aprite .mcp.json con Blocco note (o TextEdit) e leggetelo.' },
@@ -125,7 +134,11 @@ export const domainPractice: Record<string, Practice> = {
     ],
   },
   'd3-1': {
-    needs: [FOLDER, CODE],
+    needs: [
+      FOLDER,
+      CODE,
+      'Dal kit: kit/claude-code/rules/risposte.md; da cartella-prova: risposte/pacco-danneggiato.md e procedure/spedizioni.md',
+    ],
     steps: [
       { text: 'Create CLAUDE.md e leggetelo.', prompt: '/init' },
       {
@@ -146,7 +159,11 @@ export const domainPractice: Record<string, Practice> = {
     ],
   },
   'd3-2': {
-    needs: [FOLDER, CODE],
+    needs: [
+      FOLDER,
+      CODE,
+      'Dal kit: kit/claude-code/skills/spiega-procedura e kit/claude-code/agents/revisore-documenti.md; da cartella-prova: i file della cartella procedure',
+    ],
     steps: [
       {
         text: 'Fate installare skill e subagente, poi uscite con /exit e riavviate claude.',
@@ -171,7 +188,11 @@ export const domainPractice: Record<string, Practice> = {
     ],
   },
   'd3-3': {
-    needs: [FOLDER, 'Terminale in cartella-prova, senza aprire Claude Code'],
+    needs: [
+      FOLDER,
+      'Terminale in cartella-prova, senza aprire Claude Code',
+      'Da cartella-prova: i file della cartella procedure',
+    ],
     steps: [
       { text: 'Una richiesta non interattiva (tutto su una riga).', prompt: COUNT_COMMAND },
       { text: 'Una revisione salvata in un file (tutto su una riga).', prompt: REVIEW_COMMAND },
@@ -180,14 +201,14 @@ export const domainPractice: Record<string, Practice> = {
     ],
   },
   'd4-1': {
-    needs: ['kit/dati/email_supporto.txt', 'Due chat nuove con Claude'],
+    needs: ['Due chat nuove con Claude', 'Dal kit: kit/dati/email_supporto.txt'],
     steps: [
       {
-        text: 'Chat 1: allegate email_supporto.txt e date un’istruzione vaga.',
+        text: 'Chat 1: allegate kit/dati/email_supporto.txt e date un’istruzione vaga.',
         prompt: 'Classifica queste email di supporto per urgenza, usando il tuo miglior giudizio.',
       },
       {
-        text: 'Chat 2: allegate lo stesso file e date criteri ed esempi.',
+        text: 'Chat 2: allegate di nuovo kit/dati/email_supporto.txt e date criteri ed esempi.',
         prompt: `Classifica ogni email in una sola categoria: RIMBORSO, SPEDIZIONE, ACCOUNT, TECNICO, ALTRO.
 Urgenza ALTA solo se c'è un addebito errato o un account bloccato. NON è alta solo perché il tono è arrabbiato.
 Se un'email chiede due cose, usa la categoria della richiesta economica e segnala l'altra in nota.
@@ -201,19 +222,22 @@ Rispondi con una tabella: numero, categoria, urgenza, motivo.`,
     ],
   },
   'd4-2': {
-    needs: ['kit/dati/fattura.txt e kit/dati/schema_fattura.json', CHAT],
+    needs: [CHAT, 'Dal kit: kit/dati/fattura.txt e kit/dati/schema_fattura.json'],
     steps: [
-      { text: 'Allegate i due file e chiedete i dati.', prompt: INVOICE_PROMPT },
+      {
+        text: 'Allegate kit/dati/fattura.txt e kit/dati/schema_fattura.json e chiedete i dati.',
+        prompt: INVOICE_PROMPT,
+      },
       {
         text: 'Sommate le righe e confrontate il risultato con l’imponibile della fattura (non con il totale, che comprende l’IVA).',
       },
     ],
   },
   'd4-3': {
-    needs: [FOLDER, CODE],
+    needs: [FOLDER, CODE, 'Da cartella-prova: la cartella procedure (il file sconti.md lo crea Claude)'],
     steps: [
       {
-        text: 'Sessione 1: fate scrivere una procedura.',
+        text: 'Sessione 1: fate scrivere una procedura nuova.',
         prompt: `Scrivi in procedure/sconti.md una breve procedura per gli operatori con queste regole: ${DISCOUNT_RULES}. Procedi senza fare domande.`,
       },
       {
@@ -227,7 +251,11 @@ Rispondi con una tabella: numero, categoria, urgenza, motivo.`,
     ],
   },
   'd5-1': {
-    needs: [FOLDER, CODE, 'kit/dati/caso_cliente.txt'],
+    needs: [
+      FOLDER,
+      CODE,
+      'Da cartella-prova: i file della cartella procedure; dal kit: kit/dati/caso_cliente.txt',
+    ],
     steps: [
       { text: 'Guardate il contesto occupato.', prompt: '/context' },
       {
@@ -240,7 +268,7 @@ Rispondi con una tabella: numero, categoria, urgenza, motivo.`,
           'Usa un subagente Explore per riassumere cosa fanno i file in procedure: voglio solo il riepilogo.',
       },
       {
-        text: 'Incollate il testo di caso_cliente.txt, poi compattate.',
+        text: 'Aprite kit/dati/caso_cliente.txt con Blocco note (o TextEdit), copiate tutto il testo e incollatelo in Claude Code; poi compattate.',
         prompt: '/compact Conserva alla lettera il blocco FATTI DEL CASO.',
       },
       {
@@ -250,7 +278,7 @@ Rispondi con una tabella: numero, categoria, urgenza, motivo.`,
     ],
   },
   'd5-2': {
-    needs: [CHAT],
+    needs: [CHAT, NO_FILES],
     steps: [
       {
         text: 'Impostate ruolo e regole.',
@@ -278,10 +306,10 @@ Rispondi ai prossimi messaggi come se fossero del cliente. Clienti in archivio: 
     ],
   },
   'd5-3': {
-    needs: ['kit/dati/fonti_conflitto.txt', CHAT],
+    needs: [CHAT, 'Dal kit: kit/dati/fonti_conflitto.txt'],
     steps: [
       {
-        text: 'Allegate il file e chiedete una sintesi libera.',
+        text: 'Allegate kit/dati/fonti_conflitto.txt e chiedete una sintesi libera.',
         prompt: 'Riassumi in due righe i ricavi del Q4 2025 di Nordica.',
       },
       {

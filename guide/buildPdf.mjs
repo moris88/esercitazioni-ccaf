@@ -53,6 +53,7 @@ const cover = `<section class="page">
 <h1>Esercitazioni con Claude</h1>
 <p>Le stesse esercitazioni del simulatore, da rifare da soli. Non serve programmare: si usano solo la chat di Claude (app o browser) e Claude Code nel terminale.</p>
 <p class="note"><b>Come usarle.</b> I riquadri grigi si copiano così come sono. Preparate prima il computer con «Guida_setup_e_avvio.pdf». Le risposte di Claude cambiano da una prova all’altra: contano i punti da osservare, non il testo identico.</p>
+<p class="note"><b>Ogni esercitazione è indipendente.</b> Si può fare in qualsiasi ordine: in «Cosa serve» trovate i file da usare, dal kit o da cartella-prova. Se un’esercitazione precedente ha modificato cartella-prova, ricopiatela dall’originale.</p>
 <h2>Le ${exercises.length} esercitazioni</h2>
 <table><tr><th>N.</th><th>Lezione</th><th>Esercitazione</th><th>Dove</th><th>Durata</th></tr>${rows.join('')}</table>
 </section>`;

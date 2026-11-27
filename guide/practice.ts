@@ -10,12 +10,18 @@ export interface Practice {
 }
 
 export const CHAT = 'Una chat nuova con Claude';
-export const FOLDER = 'cartella-prova e kit, una accanto all’altra';
+export const FOLDER =
+  'Una copia pulita di cartella-prova, con kit accanto (se un’altra esercitazione l’ha modificata, ricopiatela dall’originale)';
+export const NO_FILES = 'Nessun file: tutto il materiale è già nei riquadri grigi';
 export const CODE = 'Terminale aperto in cartella-prova, con Claude Code avviato (comando: claude)';
 
 export const prePractice: Record<string, Practice> = {
   'p-0': {
-    needs: [CHAT, 'Terminale aperto in cartella-prova, con Claude Code installato'],
+    needs: [
+      CHAT,
+      'Terminale aperto in una copia pulita di cartella-prova, con Claude Code installato',
+      'Da cartella-prova: LEGGIMI.md',
+    ],
     steps: [
       {
         text: 'Nella chat, chiedete a Claude di presentarsi.',
@@ -29,13 +35,13 @@ export const prePractice: Record<string, Practice> = {
       { text: 'Avviate una sessione e scrivete /help per vedere i comandi con /.', prompt: 'claude' },
       {
         text: 'Chiedete una piccola modifica e rispondete alla richiesta di permesso.',
-        prompt: 'Leggi @README.md e aggiungi in fondo una riga con la data di oggi.',
+        prompt: 'Leggi @LEGGIMI.md e aggiungi in fondo una riga con la data di oggi.',
       },
       { text: 'Uscite con /exit, poi riprendete la conversazione.', prompt: 'claude -c' },
     ],
   },
   'p-1': {
-    needs: [CHAT],
+    needs: [CHAT, NO_FILES],
     steps: [
       {
         text: 'Incollate questo JSON e chiedete gli errori.',
@@ -55,12 +61,12 @@ export const prePractice: Record<string, Practice> = {
     ],
   },
   'p-2': {
-    needs: [CHAT],
+    needs: [CHAT, NO_FILES],
     steps: [
       {
         text: 'Guardate due formati a confronto.',
         prompt:
-          'Mostrami lo stesso file di istruzioni in YAML due volte: una corretta e una con un errore di indentazione. Spiega l’errore a chi non programma.',
+          'Mostrami due volte il frontmatter YAML di un subagente di Claude Code (name: revisore-codice, description: Rivede il codice, tools: Read e Grep): una versione corretta e una con un errore di indentazione. Spiega l’errore a chi non programma.',
       },
       {
         text: 'Chiedete la stessa risposta per una persona e per un programma.',
@@ -80,7 +86,7 @@ export const prePractice: Record<string, Practice> = {
     ],
   },
   'p-3': {
-    needs: [CHAT],
+    needs: [CHAT, NO_FILES],
     steps: [
       {
         text: 'Decidete che cosa fare con ciascun codice, poi controllate con Claude.',
@@ -100,7 +106,7 @@ export const prePractice: Record<string, Practice> = {
     ],
   },
   'p-4': {
-    needs: [CHAT, 'Facoltativo: il terminale aperto in cartella-prova'],
+    needs: [CHAT, NO_FILES],
     steps: [
       {
         text: 'Fatevi spiegare un comando pezzo per pezzo.',
@@ -125,7 +131,7 @@ export const prePractice: Record<string, Practice> = {
     ],
   },
   'p-5': {
-    needs: [CHAT],
+    needs: [CHAT, NO_FILES],
     steps: [
       {
         text: 'Distinguete i file condivisi da quelli personali.',
@@ -145,7 +151,7 @@ export const prePractice: Record<string, Practice> = {
     ],
   },
   'p-6': {
-    needs: [CHAT],
+    needs: [CHAT, NO_FILES],
     steps: [
       {
         text: 'Leggete una query con l’aiuto di Claude.',
@@ -165,14 +171,14 @@ export const prePractice: Record<string, Practice> = {
     ],
   },
   'p-7': {
-    needs: [CHAT, 'kit/dati/fattura.txt'],
+    needs: [CHAT, 'Dal kit: kit/dati/fattura.txt'],
     steps: [
       {
-        text: 'Allegate fattura.txt e spingete Claude a rispondere.',
+        text: 'Allegate kit/dati/fattura.txt e spingete Claude a rispondere.',
         prompt: 'Dammi il numero d’ordine di acquisto. Rispondi sempre con un valore.',
       },
       {
-        text: 'In una chat nuova allegate lo stesso file e permettete il vuoto.',
+        text: 'In una chat nuova allegate di nuovo kit/dati/fattura.txt e permettete il vuoto.',
         prompt: 'Dammi il numero d’ordine di acquisto. Usa solo il documento; se manca, rispondi null.',
       },
       {
@@ -188,7 +194,7 @@ export const prePractice: Record<string, Practice> = {
     ],
   },
   'p-8': {
-    needs: [CHAT],
+    needs: [CHAT, NO_FILES],
     steps: [
       {
         text: 'Distinguete parallelo e sequenziale.',
