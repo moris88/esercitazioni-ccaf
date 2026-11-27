@@ -51,8 +51,8 @@ Ogni scena dichiara `source`: `reale` (output registrato), `esempio` (scritto pe
 ## Materiali scaricabili
 
 Il bottone «Scarica materiali» nella barra laterale scarica `materiali-corso.zip` con `cartella-prova`, `kit`
-e i due PDF della cartella superiore. Lo zip è creato da `npm run zip` (PowerShell), eseguito in automatico prima di
-`npm run dev` e `npm run build`: rigenerare i PDF prima, se sono cambiati.
+e i due PDF della cartella superiore. Quei file non sono nel repository, quindi lo zip si crea in locale con
+`npm run zip` (PowerShell, su Windows) e si committa in `public/`. Rilanciarlo dopo ogni modifica ai materiali o ai PDF.
 
 ## Generare i PDF
 
