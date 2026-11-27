@@ -12,7 +12,11 @@ const out = join(root, 'public', 'materiali-corso.zip');
 mkdirSync(dirname(out), { recursive: true });
 rmSync(out, { force: true });
 const paths = items.map((item) => `'${join(source, item).replaceAll("'", "''")}'`).join(',');
-execFileSync('powershell', ['-NoProfile', '-Command', `Compress-Archive -Path ${paths} -DestinationPath '${out}'`], {
-  stdio: 'inherit',
-});
+execFileSync(
+  'powershell',
+  ['-NoProfile', '-Command', `Compress-Archive -Path ${paths} -DestinationPath '${out}'`],
+  {
+    stdio: 'inherit',
+  },
+);
 console.log(`Creato ${out}`);
