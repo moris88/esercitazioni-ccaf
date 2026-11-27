@@ -7,7 +7,10 @@
     "node": ">=24"
   },
   "scripts": {
+    "zip": "node scripts/buildZip.mjs",
+    "predev": "npm run zip",
     "dev": "vite",
+    "prebuild": "npm run zip",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "test": "vitest run",

@@ -48,6 +48,12 @@ Ogni scena dichiara `source`: `reale` (output registrato), `esempio` (scritto pe
 
 `npm run lint`, `npm test`, `npm run build`
 
+## Materiali scaricabili
+
+Il bottone «Scarica materiali» nella barra laterale scarica `materiali-corso.zip` con `cartella-prova`, `kit`
+e i due PDF della cartella superiore. Lo zip è creato da `npm run zip` (PowerShell), eseguito in automatico prima di
+`npm run dev` e `npm run build`: rigenerare i PDF prima, se sono cambiati.
+
 ## Generare i PDF
 
 `npm run pdf` ricrea `Esercitazioni_pratiche.pdf` e `Guida_setup_e_avvio.pdf` nella cartella superiore (serve Microsoft Edge).

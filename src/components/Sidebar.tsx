@@ -19,6 +19,13 @@ export function Sidebar({ exercises, current }: SidebarProps) {
       className="w-72 shrink-0 overflow-x-hidden overflow-y-auto bg-sand p-3"
     >
       <p className="px-3 py-2 font-serif text-xl font-bold">CCA-F</p>
+      <a
+        href={`${import.meta.env.BASE_URL}materiali-corso.zip`}
+        download
+        className="mb-3 block rounded-xl border border-accent px-3 py-2 text-center text-sm font-bold text-accent hover:bg-white"
+      >
+        Scarica materiali (.zip)
+      </a>
       <div className="mb-3 flex gap-1 rounded-xl bg-white p-1">
         <a
           href={`#${exercises[0].id}`}
