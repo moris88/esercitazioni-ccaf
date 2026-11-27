@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import type { Player } from './usePlayer';
+import type { ControlAction } from '../components/PlayerControls';
 
 const SHORTCUTS = new Map<string, 'toggle' | 'next' | 'prev' | 'restart'>([
   [' ', 'toggle'],
@@ -8,7 +8,7 @@ const SHORTCUTS = new Map<string, 'toggle' | 'next' | 'prev' | 'restart'>([
   ['r', 'restart'],
 ]);
 
-export function usePlayerKeys(dispatch: Player['dispatch']) {
+export function usePlayerKeys(dispatch: (action: ControlAction) => void) {
   useEffect(() => {
     function handleKey(event: KeyboardEvent) {
       const type = SHORTCUTS.get(event.key);

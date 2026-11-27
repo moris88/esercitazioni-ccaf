@@ -1,7 +1,19 @@
-import type { Player } from '../player/usePlayer';
+export type ControlAction =
+  | { type: 'toggle' | 'next' | 'prev' | 'restart' }
+  | { type: 'seek'; index: number };
+
+/** Quanto serve ai controlli: lo soddisfano sia il player delle esercitazioni sia quello delle animazioni */
+export interface ControlledPlayer {
+  index: number;
+  playing: boolean;
+  finished: boolean;
+  speed: number;
+  setSpeed: (speed: number) => void;
+  dispatch: (action: ControlAction) => void;
+}
 
 interface PlayerControlsProps {
-  player: Player;
+  player: ControlledPlayer;
   total: number;
 }
 

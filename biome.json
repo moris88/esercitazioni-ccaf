@@ -21,7 +21,7 @@
   },
   "overrides": [
     {
-      "includes": ["src/exercises/**"],
+      "includes": ["src/exercises/**", "src/lessons/data/**"],
       "linter": {
         "rules": {
           "suspicious": {

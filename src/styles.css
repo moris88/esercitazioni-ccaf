@@ -15,6 +15,7 @@
   --animate-blink: blink 1s steps(2) infinite;
   --animate-flow: flow 0.7s linear infinite;
   --animate-grow: grow 1.2s ease-out;
+  --animate-travel: travel 1.2s ease-in-out both;
 
   @keyframes enter {
     from {
@@ -30,6 +31,16 @@
   @keyframes grow {
     from {
       transform: scaleX(0);
+    }
+  }
+  @keyframes travel {
+    from {
+      left: var(--fx);
+      top: var(--fy);
+    }
+    to {
+      left: var(--tx);
+      top: var(--ty);
     }
   }
   @keyframes flow {

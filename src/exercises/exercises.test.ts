@@ -7,8 +7,8 @@ const scenes = exercises.flatMap((exercise) =>
 );
 
 describe('exercises', () => {
-  it('dovrebbe elencare le 24 esercitazioni con id univoci', () => {
-    expect(new Set(exercises.map(({ id }) => id)).size).toBe(24);
+  it('dovrebbe elencare le 25 esercitazioni con id univoci', () => {
+    expect(new Set(exercises.map(({ id }) => id)).size).toBe(25);
   });
 
   it.each(scenes)('dovrebbe riprodurre fino alla fine $name', ({ scene }) => {

@@ -3,7 +3,7 @@
 App React da proiettare a lezione: anima le esercitazioni nel terminale, in chat e in Claude Code.
 È tutto simulato: non chiama Claude, non esegue comandi e funziona senza rete dopo l'installazione.
 
-Contiene 24 esercitazioni: P·1-P·8 (pre-corso) e D1·1-D5·3 (domini). Sopra ogni scena, «Cosa vediamo» spiega che cosa si vede a schermo.
+Contiene 25 esercitazioni: P·0-P·8 (pre-corso) e D1·1-D5·3 (domini). Sopra ogni scena, «Cosa vediamo» spiega che cosa si vede a schermo.
 
 ## Avvio
 
@@ -11,6 +11,19 @@ Contiene 24 esercitazioni: P·1-P·8 (pre-corso) e D1·1-D5·3 (domini). Sopra o
     npm run dev
 
 Poi aprire l'indirizzo mostrato (di solito http://localhost:5173).
+
+## Accesso
+
+All'apertura il simulatore chiede utente e password, letti da due variabili d'ambiente.
+Copiare `.env.example` in `.env` e impostare:
+
+    VITE_LOGIN_USER=...
+    VITE_LOGIN_PASSWORD=...
+
+Riavviare `npm run dev` (o rifare la build) dopo ogni modifica. L'accesso vale finché la scheda del browser resta aperta.
+
+Attenzione: è un'app senza backend, quindi i valori finiscono in chiaro nel codice JS scaricato dal browser.
+Serve a evitare accessi casuali durante la presentazione, non a proteggere dati riservati.
 
 ## Comandi da tastiera
 

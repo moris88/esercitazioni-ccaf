@@ -15,6 +15,7 @@ import { d4Review } from './d4Review';
 import { d5Context } from './d5Context';
 import { d5Escalation } from './d5Escalation';
 import { d5Sources } from './d5Sources';
+import { p0Claude } from './p0Claude';
 import { p1Basics } from './p1Basics';
 import { p2Formats } from './p2Formats';
 import { p3Network } from './p3Network';
@@ -26,6 +27,7 @@ import { p8Architecture } from './p8Architecture';
 
 /** In ordine di programma */
 export const exercises: Exercise[] = [
+  p0Claude,
   p1Basics,
   p2Formats,
   p3Network,

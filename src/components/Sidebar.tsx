@@ -1,25 +1,70 @@
+import { groupLabels, lessons } from '../lessons';
 import type { Exercise } from '../types';
 
 interface SidebarProps {
   exercises: Exercise[];
-  currentId: string;
+  /** Esercitazione o animazione in primo piano */
+  current: { section: 'exercises' | 'lessons'; id: string };
 }
 
-export function Sidebar({ exercises, currentId }: SidebarProps) {
+const TAB = 'min-w-0 flex-1 truncate rounded-lg px-2 py-2 text-center text-[0.8rem] font-bold';
+
+export function Sidebar({ exercises, current }: SidebarProps) {
+  const inLessons = current.section === 'lessons';
+  const groups = [...new Set(lessons.map(({ group }) => group))];
+
   return (
-    <nav aria-label="Esercitazioni" className="w-64 shrink-0 overflow-y-auto bg-sand p-3">
-      <p className="px-3 py-2 font-serif text-xl font-bold">Esercitazioni CCA-F</p>
-      {exercises.map(({ id, code, title }) => (
+    <nav
+      aria-label={inLessons ? 'Animazioni' : 'Esercitazioni'}
+      className="w-72 shrink-0 overflow-x-hidden overflow-y-auto bg-sand p-3"
+    >
+      <p className="px-3 py-2 font-serif text-xl font-bold">CCA-F</p>
+      <div className="mb-3 flex gap-1 rounded-xl bg-white p-1">
         <a
-          key={id}
-          href={`#${id}`}
-          aria-current={id === currentId ? 'page' : undefined}
-          className={`block rounded-lg px-3 py-2 ${id === currentId ? 'bg-accent text-white' : 'hover:bg-white'}`}
+          href={`#${exercises[0].id}`}
+          aria-current={inLessons ? undefined : 'page'}
+          className={`${TAB} ${inLessons ? 'hover:bg-sand' : 'bg-accent text-white'}`}
         >
-          <span className="block text-xs font-bold">{code}</span>
-          <span className="block text-sm">{title}</span>
+          Esercitazioni
         </a>
-      ))}
+        <a
+          href={`#animazioni/${lessons[0].id}`}
+          aria-current={inLessons ? 'page' : undefined}
+          className={`${TAB} ${inLessons ? 'bg-accent text-white' : 'hover:bg-sand'}`}
+        >
+          Animazioni
+        </a>
+      </div>
+      {inLessons
+        ? groups.map((group) => (
+            <section key={group} className="mb-3">
+              <h2 className="px-3 py-1 text-xs font-bold text-muted uppercase">{groupLabels[group]}</h2>
+              {lessons
+                .filter((lesson) => lesson.group === group)
+                .map(({ id, code, title }) => (
+                  <a
+                    key={id}
+                    href={`#animazioni/${id}`}
+                    aria-current={id === current.id ? 'page' : undefined}
+                    className={`block rounded-lg px-3 py-2 ${id === current.id ? 'bg-accent text-white' : 'hover:bg-white'}`}
+                  >
+                    <span className="block text-xs font-bold">{code}</span>
+                    <span className="block text-sm">{title}</span>
+                  </a>
+                ))}
+            </section>
+          ))
+        : exercises.map(({ id, code, title }) => (
+            <a
+              key={id}
+              href={`#${id}`}
+              aria-current={id === current.id ? 'page' : undefined}
+              className={`block rounded-lg px-3 py-2 ${id === current.id ? 'bg-accent text-white' : 'hover:bg-white'}`}
+            >
+              <span className="block text-xs font-bold">{code}</span>
+              <span className="block text-sm">{title}</span>
+            </a>
+          ))}
     </nav>
   );
 }

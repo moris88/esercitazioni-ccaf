@@ -14,6 +14,26 @@ export const FOLDER = 'cartella-prova e kit, una accanto all’altra';
 export const CODE = 'Terminale aperto in cartella-prova, con Claude Code avviato (comando: claude)';
 
 export const prePractice: Record<string, Practice> = {
+  'p-0': {
+    needs: [CHAT, 'Terminale aperto in cartella-prova, con Claude Code installato'],
+    steps: [
+      {
+        text: 'Nella chat, chiedete a Claude di presentarsi.',
+        prompt: 'Che cos’è Claude e in quali modi posso usarlo? Rispondi con una tabella breve.',
+      },
+      { text: 'Nel terminale, guardate comandi e flag disponibili.', prompt: 'claude --help' },
+      {
+        text: 'Fate una sola domanda e notate che il terminale torna subito libero.',
+        prompt: 'claude -p "Quali file ci sono in questa cartella?"',
+      },
+      { text: 'Avviate una sessione e scrivete /help per vedere i comandi con /.', prompt: 'claude' },
+      {
+        text: 'Chiedete una piccola modifica e rispondete alla richiesta di permesso.',
+        prompt: 'Leggi @README.md e aggiungi in fondo una riga con la data di oggi.',
+      },
+      { text: 'Uscite con /exit, poi riprendete la conversazione.', prompt: 'claude -c' },
+    ],
+  },
   'p-1': {
     needs: [CHAT],
     steps: [

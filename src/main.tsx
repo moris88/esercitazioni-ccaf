@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from './App';
+import { LoginGate } from './components/LoginGate';
 import './styles.css';
 
 const root = document.getElementById('root');
@@ -8,6 +9,8 @@ if (!root) throw new Error('Elemento #root non trovato');
 
 createRoot(root).render(
   <StrictMode>
-    <App />
+    <LoginGate>
+      <App />
+    </LoginGate>
   </StrictMode>,
 );
